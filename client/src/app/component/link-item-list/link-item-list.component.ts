@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Link } from '../../types';
-
-// 1
+import { AuthService } from './../../auth.service';
 import { ALL_LINKS_QUERY, AllLinkQueryResponse } from '../../graphql';
 
 @Component({
@@ -10,25 +9,56 @@ import { ALL_LINKS_QUERY, AllLinkQueryResponse } from '../../graphql';
   templateUrl: './link-item-list.component.html',
   styleUrls: ['./link-item-list.component.css']
 })
-export class LinkItemListComponent implements OnInit {
-  // 2
+export class LinkItemListComponent implements OnInit, OnDestroy {
   allLinks: Link[] = [];
-  loading: Boolean = true;
+  loading: boolean = true;
+  logged: boolean = false;
+  // TODO: POST ISSUE
+  // Type/Interface Subscribtion not implemented at this point.
+  // // https://github.com/howtographql/howtographql/blob/master/content/frontend/angular-apollo/6-more-mutations-and-updating-the-store.md
+  subscriptions: any[] /* Subscribtion */ = [];
 
-  // 3
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo, private authService: AuthService) {
+  }
+
+  updateStoreAfterVote(store, createVote, linkId) {
+    // 1
+    const data = store.readQuery({
+      query: ALL_LINKS_QUERY
+    });
+
+    // 2
+    const votedLink = data.allLinks.find(link => link.id === linkId);
+    votedLink.votes = createVote.link.votes;
+
+    // 3
+    store.writeQuery({ query: ALL_LINKS_QUERY, data });
   }
 
   ngOnInit() {
-    // 4
-    this.apollo.watchQuery<AllLinkQueryResponse>({
+
+    this.authService.isAuthenticated
+      .distinctUntilChanged()
+      .subscribe(isAuthenticated => {
+        this.logged = isAuthenticated;
+      });
+
+    const querySubscription = this.apollo.watchQuery<AllLinkQueryResponse>({
       query: ALL_LINKS_QUERY
     }).valueChanges.subscribe((response) => {
-      // 5
       this.allLinks = response.data.allLinks;
       this.loading = response.data.loading;
     });
 
+    this.subscriptions = [...this.subscriptions, querySubscription];
+
   }
 
+  ngOnDestroy(): void {
+    for (let sub of this.subscriptions) {
+      if (sub && sub.unsubscribe) {
+        sub.unsubscribe();
+      }
+    }
+  }
 }

@@ -8,6 +8,8 @@ import { CreateLinkComponent } from './component/create-link/create-link.compone
 import { LinkItemComponent } from './component/link-item/link-item.component';
 import { LinkItemListComponent } from './component/link-item-list/link-item-list.component';
 import { HeaderComponent } from './component/header/header.component';
+import { LoginComponent } from './component/login/login.component';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,8 @@ import { HeaderComponent } from './component/header/header.component';
     CreateLinkComponent,
     LinkItemComponent,
     LinkItemListComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent
   ],
   imports: [
     AppRoutingModule,
@@ -23,7 +26,9 @@ import { HeaderComponent } from './component/header/header.component';
     FormsModule,
     GraphQLModule
   ],
-  providers: [],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

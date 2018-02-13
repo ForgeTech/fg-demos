@@ -4,6 +4,7 @@ import { ALL_LINKS_QUERY, CREATE_LINK_MUTATION, CreateLinkMutationResponse } fro
 import { ApolloLink } from 'apollo-link';
 import { AppRoutingModule } from '../../app.routing';
 import { Router } from '@angular/router';
+import { GC_USER_ID } from './../../constants';
 
 @Component({
   selector: 'hn-create-link',
@@ -24,13 +25,27 @@ export class CreateLinkComponent implements OnInit {
   ngOnInit() { }
 
   createLink() {
+    const postedById = localStorage.getItem(GC_USER_ID);
+    if (!postedById) {
+      console.error('No user logged in');
+      return;
+    }
+
+    const newDescription = this.description;
+    const newUrl = this.url;
+    this.description = '';
+    this.url = '';
+
     this.apollo.mutate<CreateLinkMutationResponse>({
       mutation: CREATE_LINK_MUTATION,
       variables: {
-        description: this.description,
-        url: this.url
+        description: newDescription,
+        url: newUrl,
+        postedById: postedById
       },
       update: (store, { data: { createLink } }) => {
+        console.log( 'createLink' );
+        console.log( createLink );
         const data: any = store.readQuery({
           query: ALL_LINKS_QUERY
         });
@@ -41,7 +56,10 @@ export class CreateLinkComponent implements OnInit {
     }).subscribe((response) => {
       // We injected the Router service
       this.router.navigate(['/']);
+    }, (error) => {
+      console.error(error);
+      this.description = newDescription;
+      this.url = newUrl;
     });
-  }
   }
 }

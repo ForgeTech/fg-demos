@@ -1,14 +1,23 @@
-import { Link } from './types';
-// 1
+import { Link, User } from './types';
 import gql from 'graphql-tag';
 
-// 2
 export const ALL_LINKS_QUERY = gql`
   query AllLinksQuery {
     allLinks {
       id
+      createdAt
       url
       description
+      postedBy {
+        id
+        name
+      }
+      votes {
+        id
+        user {
+          id
+        }
+      }
     }
   }
 `;
@@ -21,21 +30,107 @@ export interface AllLinkQueryResponse {
 
 // 1
 export const CREATE_LINK_MUTATION = gql`
-  mutation CreateLinkMutation($description: String!, $url: String!) {
+  mutation CreateLinkMutation($description: String!, $url: String!, $postedById: ID!) {
     createLink(
       description: $description,
       url: $url,
+      postedById: $postedById
     ) {
       id
       createdAt
       url
       description
+      postedBy {
+        id
+        name
+      }
     }
   }
 `;
 
 // 3
 export interface CreateLinkMutationResponse {
-    createLink: Link;
-    loading: boolean;
+  createLink: Link;
+  loading: boolean;
+  postedBy: {
+    id
+    name
+  };
+}
+
+export const CREATE_USER_MUTATION = gql`
+  mutation CreateUserMutation($name: String!, $email: String!, $password: String!){
+    signupUser(
+      name: $name,
+      email: $email,
+      password: $password
+    ){
+      id
+    }
+
+    authenticateUser(
+      email: $email,
+      password: $password,
+    ){
+      token
+      id
+    }
+  }
+`;
+
+export interface CreateUserMutationResponse {
+  loading: boolean;
+  createUser: User;
+  signinUser: {
+    token: string,
+    user?: User
+  };
+}
+
+export const SIGNIN_USER_MUTATION = gql`
+  mutation SigninUserMutation($email: String!, $password: String!) {
+    authenticateUser(
+      email: $email,
+      password: $password,
+    ){
+      token
+      id
+    }
+  }
+`;
+
+export interface SigninUserMutationResponse {
+  loading: boolean;
+  signinUser: {
+    token: string,
+    user?: User
+  };
+}
+
+export const CREATE_VOTE_MUTATION = gql`
+  mutation CreateVoteMutation($userId: ID!, $linkId: ID!) {
+    createVote(userId: $userId, linkId: $linkId) {
+      id
+      link {
+        votes {
+          id
+          user {
+            id
+          }
+        }
+      }
+      user {
+        id
+      }
+    }
+  }
+`;
+
+export interface CreateVoteMutationResponse {
+  loading: boolean;
+  createVote: {
+    id: string;
+    link: Link;
+    user: User;
+  };
 }
