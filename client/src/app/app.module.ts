@@ -10,6 +10,7 @@ import { LinkItemListComponent } from './component/link-item-list/link-item-list
 import { HeaderComponent } from './component/header/header.component';
 import { LoginComponent } from './component/login/login.component';
 import { AuthService } from './auth.service';
+import { SearchComponent } from './component/search/search.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AuthService } from './auth.service';
     LinkItemComponent,
     LinkItemListComponent,
     HeaderComponent,
-    LoginComponent
+    LoginComponent,
+    SearchComponent
   ],
   imports: [
     AppRoutingModule,

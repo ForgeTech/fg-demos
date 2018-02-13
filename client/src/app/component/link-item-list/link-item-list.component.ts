@@ -3,6 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { Link } from '../../types';
 import { AuthService } from './../../auth.service';
 import { ALL_LINKS_QUERY, AllLinkQueryResponse } from '../../graphql';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'hn-link-item-list',
@@ -16,7 +17,7 @@ export class LinkItemListComponent implements OnInit, OnDestroy {
   // TODO: POST ISSUE
   // Type/Interface Subscribtion not implemented at this point.
   // // https://github.com/howtographql/howtographql/blob/master/content/frontend/angular-apollo/6-more-mutations-and-updating-the-store.md
-  subscriptions: any[] /* Subscribtion */ = [];
+  subscriptions: Subscription[] = [];
 
   constructor(private apollo: Apollo, private authService: AuthService) {
   }

@@ -5,6 +5,7 @@ import { CREATE_VOTE_MUTATION } from './../../graphql';
 import { GC_USER_ID } from './../../constants';
 import { Apollo } from 'apollo-angular';
 import { DataProxy } from 'apollo-cache';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'hn-link-item',
@@ -29,10 +30,7 @@ export class LinkItemComponent implements OnInit, OnDestroy {
   @Input()
   updateStoreAfterVote: any; // UpdateStoreAfterVoteCallback;
 
-  // TODO: POST ISSUE
-  // Type/Interface Subscribtion not implemented at this point.
-  // // https://github.com/howtographql/howtographql/blob/master/content/frontend/angular-apollo/6-more-mutations-and-updating-the-store.md
-  subscriptions: any[] /* Subscribtion */ = [];
+  subscriptions: Subscription[] = [];
 
   constructor(private apollo: Apollo) {
   }
