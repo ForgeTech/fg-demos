@@ -11,9 +11,18 @@ import { SearchComponent } from './component/search/search.component';
  * Setup all routes here
  */
 const routes: Routes = [
-    // 2
     {
         path: '',
+        pathMatch: 'full',
+        redirectTo: '/new/1'
+    },
+    {
+        path: 'new/:page',
+        component: LinkItemListComponent,
+        pathMatch: 'full'
+    },
+    {
+        path: 'top',
         component: LinkItemListComponent,
         pathMatch: 'full'
     },

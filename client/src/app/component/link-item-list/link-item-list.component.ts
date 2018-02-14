@@ -57,11 +57,17 @@ export class LinkItemListComponent implements OnInit, OnDestroy {
       .subscribeToMore({
         document: NEW_LINKS_SUBSCRIPTION,
         updateQuery: (previous, { subscriptionData }) => {
-          console.log('previous');
-          console.log(previous);
+          // TODO: Finde out if Bug and file if so:
+          /*
+          * const newAllLinks = [
+          *  ...(previous as any).allLinks // missing ',' doesn't throw compile time error
+          * but fails at run-time
+          *  (subscriptionData as any).data.Link.node
+          * ];
+          */
           const newAllLinks = [
-            ...(previous as any).allLinks
-            (subscriptionData as any).data.Link.node,
+            ...(previous as any).allLinks,
+            (subscriptionData as any).data.Link.node
           ];
           return {
             ...previous,
