@@ -1,4 +1,4 @@
-import { Link, User } from './types';
+import { Link, User, Vote } from './types';
 import gql from 'graphql-tag';
 
 export const ALL_LINKS_QUERY = gql`
@@ -165,4 +165,68 @@ export const ALL_LINKS_SEARCH_QUERY = gql`
 export interface AllLinksSearchQueryResponse {
   loading: boolean;
   allLinks: Link[];
+}
+
+export const NEW_LINKS_SUBSCRIPTION = gql`
+  subscription {
+    Link(filter: {
+      mutation_in: [CREATED]
+    }) {
+      node {
+        id
+        url
+        description
+        createdAt
+        postedBy {
+          id
+          name
+        }
+        votes {
+          id
+          user {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+export interface NewLinkSubcriptionResponse {
+  node: Link;
+}
+
+export const NEW_VOTES_SUBSCRIPTION = gql`
+  subscription {
+    Vote(filter: {
+      mutation_in: [CREATED]
+    }) {
+      node {
+        id
+        link {
+          id
+          url
+          description
+          createdAt
+          postedBy {
+            id
+            name
+          }
+          votes {
+            id
+            user {
+              id
+            }
+          }
+        }
+        user {
+          id
+        }
+      }
+    }
+  }
+`;
+
+export interface NewVoteSubcriptionResponse {
+  node: Vote;
 }

@@ -1,8 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, QueryRef } from 'apollo-angular';
 import { Link } from '../../types';
 import { AuthService } from './../../auth.service';
-import { ALL_LINKS_QUERY, AllLinkQueryResponse } from '../../graphql';
+import {
+  ALL_LINKS_QUERY,
+  AllLinkQueryResponse,
+  NEW_LINKS_SUBSCRIPTION,
+  NEW_VOTES_SUBSCRIPTION
+} from '../../graphql';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -44,15 +49,51 @@ export class LinkItemListComponent implements OnInit, OnDestroy {
         this.logged = isAuthenticated;
       });
 
-    const querySubscription = this.apollo.watchQuery<AllLinkQueryResponse>({
+    const allLinkQuery: QueryRef<AllLinkQueryResponse> = this.apollo.watchQuery<AllLinkQueryResponse>({
       query: ALL_LINKS_QUERY
-    }).valueChanges.subscribe((response) => {
+    });
+
+    allLinkQuery
+      .subscribeToMore({
+        document: NEW_LINKS_SUBSCRIPTION,
+        updateQuery: (previous, { subscriptionData }) => {
+          console.log('previous');
+          console.log(previous);
+          const newAllLinks = [
+            ...(previous as any).allLinks
+            (subscriptionData as any).data.Link.node,
+          ];
+          return {
+            ...previous,
+            allLinks: newAllLinks
+          };
+        }
+      });
+    allLinkQuery.subscribeToMore({
+      document: NEW_VOTES_SUBSCRIPTION,
+      updateQuery: (previous, { subscriptionData }) => {
+        const votedLinkIndex = (previous as any).allLinks.findIndex( link =>
+          link.id === (subscriptionData as any).data.Vote.node.link.id
+        );
+        let newAllLinks;
+        if (votedLinkIndex) {
+          const node = (subscriptionData as any).data.Vote.node.link;
+          newAllLinks = (previous as any).allLinks.slice();
+          newAllLinks[votedLinkIndex] = node;
+        }
+        return {
+          ...previous,
+          allLinks: newAllLinks
+        };
+      }
+    });
+
+    const querySubscription = allLinkQuery.valueChanges.subscribe((response) => {
       this.allLinks = response.data.allLinks;
       this.loading = response.data.loading;
     });
 
     this.subscriptions = [...this.subscriptions, querySubscription];
-
   }
 
   ngOnDestroy(): void {
