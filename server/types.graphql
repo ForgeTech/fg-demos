@@ -52,3 +52,12 @@ type Vote @model {
   user: User! @relation(name: "UsersVotes")
   link: Link! @relation(name: "VotesOnLink")
 }
+
+# type Comment @model {
+#   id: ID! @isUnique
+#   message: String!
+#   link: Link! @relation(name: "CommentOnLink")
+#   user: User! @relation(name: "CommentAutor")
+#   responses: [Comment!]!(name: "ResponsesToComment")
+#   votes: [Vote!]!(name: "VotesOnComment")
+# }

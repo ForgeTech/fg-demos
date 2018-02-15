@@ -13,10 +13,11 @@ import { ALL_LINKS_SEARCH_QUERY, AllLinksSearchQueryResponse } from './../../gra
 })
 export class SearchComponent implements OnInit, OnDestroy {
   allLinks: Link[] = [];
-  loading: boolean = true;
+  loading: boolean = false;
   searchText: string = '';
-
   logged: boolean = false;
+  query: any = ALL_LINKS_SEARCH_QUERY;
+  options: any = {};
 
   subscriptions: Subscription[] = [];
 
@@ -24,26 +25,25 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.authService.isAuthenticated
       .distinctUntilChanged()
       .subscribe(isAuthenticated => {
         this.logged = isAuthenticated;
       });
-
   }
 
-  // 3
   executeSearch() {
+    this.allLinks = [];
     if (!this.searchText) {
       return;
     }
-
+    this.loading = true;
+    this.options = {
+      searchText: this.searchText
+    };
     const querySubscription = this.apollo.watchQuery<AllLinksSearchQueryResponse>({
-      query: ALL_LINKS_SEARCH_QUERY,
-      variables: {
-        searchText: this.searchText
-      },
+      query: this.query,
+      variables: this.options
     }).valueChanges.subscribe((response) => {
       this.allLinks = response.data.allLinks;
       this.loading = response.data.loading;

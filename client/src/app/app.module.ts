@@ -11,6 +11,8 @@ import { HeaderComponent } from './component/header/header.component';
 import { LoginComponent } from './component/login/login.component';
 import { AuthService } from './auth.service';
 import { SearchComponent } from './component/search/search.component';
+import { MainComponent } from './component/main/main.component';
+import { FooterComponent } from './component/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { SearchComponent } from './component/search/search.component';
     LinkItemListComponent,
     HeaderComponent,
     LoginComponent,
-    SearchComponent
+    SearchComponent,
+    MainComponent,
+    FooterComponent
   ],
   imports: [
     AppRoutingModule,

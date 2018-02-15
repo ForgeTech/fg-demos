@@ -1,112 +1,70 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Apollo, QueryRef } from 'apollo-angular';
-import { Link } from '../../types';
-import { AuthService } from './../../auth.service';
-import {
-  ALL_LINKS_QUERY,
-  AllLinkQueryResponse,
-  NEW_LINKS_SUBSCRIPTION,
-  NEW_VOTES_SUBSCRIPTION
-} from '../../graphql';
+import { Component, Input } from '@angular/core';
+import { Link, Vote } from '../../types';
+import gql from 'graphql-tag';
+import { CREATE_VOTE_MUTATION, ALL_LINKS_QUERY } from './../../graphql';
+import { GC_USER_ID } from './../../constants';
+import { Apollo } from 'apollo-angular';
 import { Subscription } from 'rxjs/Subscription';
+import { DataProxy } from 'apollo-cache';
+import { variable } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'hn-link-item-list',
   templateUrl: './link-item-list.component.html',
   styleUrls: ['./link-item-list.component.css']
 })
-export class LinkItemListComponent implements OnInit, OnDestroy {
-  allLinks: Link[] = [];
+export class LinkItemListComponent {
+  @Input()
   loading: boolean = true;
+
+  @Input()
   logged: boolean = false;
-  // TODO: POST ISSUE
-  // Type/Interface Subscribtion not implemented at this point.
-  // // https://github.com/howtographql/howtographql/blob/master/content/frontend/angular-apollo/6-more-mutations-and-updating-the-store.md
+
+  @Input()
+  linksToRender: Link[];
+
+  @Input()
+  isAuthenticated: Link[];
+
+  @Input()
+  graphqlQuery: any = {};
+
+  @Input()
+  graphqlQueryOptions: any = {};
+
   subscriptions: Subscription[] = [];
 
-  constructor(private apollo: Apollo, private authService: AuthService) {
-  }
+  constructor(private apollo: Apollo) {}
 
-  updateStoreAfterVote(store, createVote, linkId) {
-    // 1
+  updateStoreAfterVote(store: DataProxy, createdVote: Vote, updateLink: Link) {
     const data = store.readQuery({
-      query: ALL_LINKS_QUERY
+      query: this.graphqlQuery,
+      variables: this.graphqlQueryOptions
     });
-
-    // 2
-    const votedLink = data.allLinks.find(link => link.id === linkId);
-    votedLink.votes = createVote.link.votes;
-
-    // 3
-    store.writeQuery({ query: ALL_LINKS_QUERY, data });
+    const votedLink = (data as any).allLinks.find(link => link.id === updateLink.id);
+    votedLink.votes = createdVote.link.votes;
+    store.writeQuery({ query: this.graphqlQuery, data });
   }
 
-  ngOnInit() {
-
-    this.authService.isAuthenticated
-      .distinctUntilChanged()
-      .subscribe(isAuthenticated => {
-        this.logged = isAuthenticated;
-      });
-
-    const allLinkQuery: QueryRef<AllLinkQueryResponse> = this.apollo.watchQuery<AllLinkQueryResponse>({
-      query: ALL_LINKS_QUERY
-    });
-
-    allLinkQuery
-      .subscribeToMore({
-        document: NEW_LINKS_SUBSCRIPTION,
-        updateQuery: (previous, { subscriptionData }) => {
-          // TODO: Finde out if Bug and file if so:
-          /*
-          * const newAllLinks = [
-          *  ...(previous as any).allLinks // missing ',' doesn't throw compile time error
-          * but fails at run-time
-          *  (subscriptionData as any).data.Link.node
-          * ];
-          */
-          const newAllLinks = [
-            ...(previous as any).allLinks,
-            (subscriptionData as any).data.Link.node
-          ];
-          return {
-            ...previous,
-            allLinks: newAllLinks
-          };
-        }
-      });
-    allLinkQuery.subscribeToMore({
-      document: NEW_VOTES_SUBSCRIPTION,
-      updateQuery: (previous, { subscriptionData }) => {
-        const votedLinkIndex = (previous as any).allLinks.findIndex( link =>
-          link.id === (subscriptionData as any).data.Vote.node.link.id
-        );
-        let newAllLinks;
-        if (votedLinkIndex) {
-          const node = (subscriptionData as any).data.Vote.node.link;
-          newAllLinks = (previous as any).allLinks.slice();
-          newAllLinks[votedLinkIndex] = node;
-        }
-        return {
-          ...previous,
-          allLinks: newAllLinks
-        };
-      }
-    });
-
-    const querySubscription = allLinkQuery.valueChanges.subscribe((response) => {
-      this.allLinks = response.data.allLinks;
-      this.loading = response.data.loading;
-    });
-
-    this.subscriptions = [...this.subscriptions, querySubscription];
-  }
-
-  ngOnDestroy(): void {
-    for (let sub of this.subscriptions) {
-      if (sub && sub.unsubscribe) {
-        sub.unsubscribe();
-      }
+  voteForLink(link: Link) {
+    const userId = localStorage.getItem(GC_USER_ID);
+    const voterIds = link.votes.map(vote => vote.user.id);
+    if (voterIds.includes(userId)) {
+      alert(`User (${userId}) already voted for this link.`);
+      return;
     }
+
+    const mutationSubscription = this.apollo.mutate({
+      mutation: CREATE_VOTE_MUTATION,
+      variables: {
+        userId: userId,
+        linkId: link.id
+      },
+      update: (store, { data: { createVote } }) => {
+        this.updateStoreAfterVote(store, createVote, link);
+      }
+    })
+    .subscribe();
+    this.subscriptions = [...this.subscriptions, mutationSubscription];
   }
 }

@@ -2,8 +2,8 @@ import { Link, User, Vote } from './types';
 import gql from 'graphql-tag';
 
 export const ALL_LINKS_QUERY = gql`
-  query AllLinksQuery {
-    allLinks {
+  query AllLinksQuery( $count: Int = 25, $offset: Int = 0, $orderBy: LinkOrderBy = createdAt_ASC ) {
+    allLinks( first: $count, skip: $offset, orderBy: $orderBy ) {
       id
       createdAt
       url
@@ -19,16 +19,17 @@ export const ALL_LINKS_QUERY = gql`
         }
       }
     }
+    _allLinksMeta {
+      count
+    }
   }
 `;
 
-// 3
 export interface AllLinkQueryResponse {
     allLinks: Link[];
     loading: boolean;
 }
 
-// 1
 export const CREATE_LINK_MUTATION = gql`
   mutation CreateLinkMutation($description: String!, $url: String!, $postedById: ID!) {
     createLink(
@@ -48,7 +49,6 @@ export const CREATE_LINK_MUTATION = gql`
   }
 `;
 
-// 3
 export interface CreateLinkMutationResponse {
   createLink: Link;
   loading: boolean;

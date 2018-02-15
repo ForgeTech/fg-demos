@@ -6,6 +6,7 @@ import { LinkItemListComponent } from './component/link-item-list/link-item-list
 import { CreateLinkComponent } from './component/create-link/create-link.component';
 import { LoginComponent } from './component/login/login.component';
 import { SearchComponent } from './component/search/search.component';
+import { MainComponent } from './component/main/main.component';
 
 /**
  * Setup all routes here
@@ -18,12 +19,12 @@ const routes: Routes = [
     },
     {
         path: 'new/:page',
-        component: LinkItemListComponent,
+        component: MainComponent,
         pathMatch: 'full'
     },
     {
         path: 'top',
-        component: LinkItemListComponent,
+        component: MainComponent,
         pathMatch: 'full'
     },
     {
