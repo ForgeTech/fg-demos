@@ -17,6 +17,7 @@
 * [ ] GRAPHQL https://github.com/apollographql/GitHunt-API
 * [ ] GRAPHQL https://github.com/apollographql/graphql-tools
 * [ ] GRAPHQL https://stackoverflow.com/questions/42274600/cache-management-for-watchquery-angular-apollo
+* [ ] GRAPHQL https://dev-blog.apollodata.com/persisted-graphql-queries-with-apollo-client-119fd7e6bba5
 ### GraphQL Unit-Testing
 * [ ] GRAPHQL blog.apollodata.com/mocking-your-server-with-just-one-line-of-code-692feda6e9cd
 ### GraphQl Server
@@ -34,6 +35,10 @@
 * [ ] GRAPHCOOL EXAMPLES https://github.com/graphcool-examples
 
 ### Investigate Bug with refetchQueries
+As alternative to calling the update-methode after creating vote mutation
+fetchQueries was investigated, but lead to unexpected behavior as descriped
+in bug reports below
+* [ ] https://www.apollographql.com/docs/angular/features/cache-updates.html
 * [ ] https://github.com/apollographql/apollo-client/issues/1821
 * [ ] https://github.com/apollographql/apollo-client/issues/1561
 * [ ] https://github.com/apollographql/apollo-client/issues/1900#issuecomment-315765415
