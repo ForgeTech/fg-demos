@@ -7,6 +7,7 @@ import { CreateLinkComponent } from './component/create-link/create-link.compone
 import { LoginComponent } from './component/login/login.component';
 import { SearchComponent } from './component/search/search.component';
 import { MainComponent } from './component/main/main.component';
+import { TopComponent } from './component/top/top.component';
 
 /**
  * Setup all routes here
@@ -24,7 +25,7 @@ const routes: Routes = [
     },
     {
         path: 'top',
-        component: MainComponent,
+        component: TopComponent,
         pathMatch: 'full'
     },
     {
@@ -55,5 +56,4 @@ const routes: Routes = [
     ],
     exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

@@ -1,3 +1,8 @@
+# types.graphql - 
+# This file defines all graphql-schemas of the forge-hackernews
+# applications graphcool graphql backend-service
+
+# ----------------------- Example (Start) -----------------------------
 # The following types define the data model of the example service
 # based on which the GraphQL API is generated
 
@@ -20,44 +25,103 @@
 #   # Every relation also required a back-relation (to determine 1:1, 1:n or n:m)
 #   author: User! @relation(name: "UserPosts")
 # }
+# -----------------------Example (End) -----------------------------
 
 type Link @model {
-  id: ID! @isUnique # required system field (read-only)
-  createdAt: DateTime! # optional system field (read-only)
-  updatedAt: DateTime! # optional system field (read-only)
+  # Required system field:
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+  # Member non-system fields
   description: String!
   url: String!
+  votesCount: Int! @migrationValue(value: 0)
+  commentCount: Int!
+  # Type relation fields
   postedBy: User @relation(name: "UserLinks")
   votes: [Vote!]! @relation(name: "VotesOnLink")
+  comments: [Comment!]! @relation(name: "CommentOnLink" )
 }
-
 
 # added by email-password template: (please uncomment)
 type User @model {
   # Required system field:
   id: ID! @isUnique # read-only (managed by Graphcool)
-  name: String!
   # Optional system fields (remove if not needed):
   createdAt: DateTime! # read-only (managed by Graphcool)
   updatedAt: DateTime! # read-only (managed by Graphcool)
-
-  email: String! @isUnique
+  # Member non-system fields
+  name: String!
+  email: String! @isUnique  
   password: String!
+  # Type relation fields
   links: [Link!]! @relation(name: "UserLinks")
   votes: [Vote!]! @relation(name: "UsersVotes")
+  comments: [Comment!]! @relation(name: "CommentAutor")
+  commentVotes: [CommentVote!]! @relation(name: "UsersCommentVotes")
+  responses: [CommentResponse!]! @relation(name: "CommentResponseAutor")
+  responsesVotes: [CommentResponseVote!]! @relation(name: "UsersCommentResponseVotes")
 }
 
 type Vote @model {
-  id: ID! @isUnique
+  # Required system field:
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (man
+  # Type relation fields
   user: User! @relation(name: "UsersVotes")
   link: Link! @relation(name: "VotesOnLink")
 }
 
-# type Comment @model {
-#   id: ID! @isUnique
-#   message: String!
-#   link: Link! @relation(name: "CommentOnLink")
-#   user: User! @relation(name: "CommentAutor")
-#   responses: [Comment!]!(name: "ResponsesToComment")
-#   votes: [Vote!]!(name: "VotesOnComment")
-# }
+type Comment @model {
+# Required system field:
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (man
+  # Member non-system fields
+  message: String!
+  # Type relation fields
+  link: Link! @relation(name: "CommentOnLink")
+  user: User! @relation(name: "CommentAutor")
+  responses: [CommentResponse!]! @relation(name: "ResponsesOnComment")
+  votes: [CommentVote!]! @relation(name: "VoteOnComment")
+}
+
+type CommentVote @model {
+  # Required system field:
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (man
+  # Type relation fields
+  user: User! @relation(name: "UsersCommentVotes")
+  comment: Comment! @relation(name: "VoteOnComment")
+}
+
+type CommentResponse @model {
+  # Required system field:
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (man
+  # Member non-system fields
+  message: String!
+  # Type relation fields
+  comment: Comment!  @relation(name: "ResponsesOnComment")
+  user: User! @relation(name: "CommentResponseAutor")
+  votes: [CommentResponseVote!]! @relation(name: "VoteOnCommentResponse")
+}
+
+type CommentResponseVote @model {
+  # Required system field:
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (man
+  # Type relation fields
+  user: User! @relation(name: "UsersCommentResponseVotes")
+  response: CommentResponse! @relation(name: "VoteOnCommentResponse")
+}

@@ -26,8 +26,11 @@ export const ALL_LINKS_QUERY = gql`
 `;
 
 export interface AllLinkQueryResponse {
-    allLinks: Link[];
-    loading: boolean;
+  allLinks: Link[];
+  loading: boolean;
+  _allLinksMeta: {
+    count: number
+  };
 }
 
 export const CREATE_LINK_MUTATION = gql`
@@ -165,6 +168,9 @@ export const ALL_LINKS_SEARCH_QUERY = gql`
 export interface AllLinksSearchQueryResponse {
   loading: boolean;
   allLinks: Link[];
+  _allLinksMeta: {
+    count: number
+  };
 }
 
 export const NEW_LINKS_SUBSCRIPTION = gql`

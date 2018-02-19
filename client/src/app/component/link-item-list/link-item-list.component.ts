@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Link, Vote } from '../../types';
 import gql from 'graphql-tag';
 import { CREATE_VOTE_MUTATION, ALL_LINKS_QUERY } from './../../graphql';
@@ -7,6 +8,8 @@ import { Apollo } from 'apollo-angular';
 import { Subscription } from 'rxjs/Subscription';
 import { DataProxy } from 'apollo-cache';
 import { variable } from '@angular/compiler/src/output/output_ast';
+import { _ } from 'lodash';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'hn-link-item-list',
@@ -23,6 +26,41 @@ export class LinkItemListComponent {
   @Input()
   linksToRender: Link[];
 
+  get orderedLinks(): Observable<Link[]> {
+    return this.route.url
+      .map((segments) => segments.toString())
+      .map(path => {
+        if (path.includes('top')) {
+          return _.orderBy(this.linksToRender, 'votes.length').reverse();
+        } else {
+          return this.linksToRender;
+        }
+      });
+  }
+
+  @Input()
+  pageNumber: number = 1;
+
+  @Input()
+  linksPerPage: number = 25;
+
+  get isNewPage(): Observable<boolean> {
+    return this.route.url
+      .map((segments) => segments.toString())
+      .map(path => path.includes('new'));
+  }
+
+  get curPageNumber(): Observable<number> {
+    return this.route.paramMap
+      .map((params) => {
+        return parseInt(params.get('page'), 10);
+      });
+  }
+
+  get morePages(): Observable<boolean> {
+    return this.curPageNumber.map( pageNumber => pageNumber < this.count / this.linksPerPage );
+  }
+
   @Input()
   isAuthenticated: Link[];
 
@@ -34,7 +72,13 @@ export class LinkItemListComponent {
 
   subscriptions: Subscription[] = [];
 
-  constructor(private apollo: Apollo) {}
+  count: number = 0;
+
+  constructor(
+    private $router: Router,
+    private route: ActivatedRoute,
+    private apollo: Apollo
+  ) {}
 
   updateStoreAfterVote(store: DataProxy, createdVote: Vote, updateLink: Link) {
     const data = store.readQuery({
@@ -66,5 +110,25 @@ export class LinkItemListComponent {
     })
     .subscribe();
     this.subscriptions = [...this.subscriptions, mutationSubscription];
+  }
+
+  nextPage() {
+    // this.route.paramMap.map((params) => this.pageNumber = parseInt(params.get('page'), 10));
+    console.log('nextPage');
+    console.log(this.route.paramMap);
+    if (this.pageNumber < this.count / this.linksPerPage) {
+      const nextPage = this.pageNumber + 1;
+      this.$router.navigate([{path: `/new/${nextPage}`}]);
+    }
+  }
+
+  previousPage() {
+    // const page = this.route.paramMap.map((params) => this.pageNumber = parseInt(params.get('page'), 10));
+    console.log('previousPage');
+ 
+    if (this.pageNumber > 1) {
+      const previousPage = this.pageNumber + 1;
+      this.$router.navigate([{ path: `/new/${previousPage}` }]);
+    }
   }
 }
