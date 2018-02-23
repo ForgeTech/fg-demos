@@ -41,19 +41,24 @@ export class CreateLinkComponent implements OnInit {
       variables: {
         description: newDescription,
         url: newUrl,
+        votesCount: 0,
         postedById: postedById
       },
       update: (store, { data: { createLink } }) => {
-        console.log( 'createLink' );
-        console.log( createLink );
         const data: any = store.readQuery({
-          query: ALL_LINKS_QUERY
+          query: ALL_LINKS_QUERY,
+          variables: {
+            first: 25,
+            skip: 0,
+            orderBy: 'createdAt_DESC'
+          }
         });
-
         data.allLinks.push(createLink);
         store.writeQuery({ query: ALL_LINKS_QUERY, data });
       },
     }).subscribe((response) => {
+      console.log( 'CreateLink-Response:' );
+      console.log( response );
       // We injected the Router service
       this.router.navigate(['/']);
     }, (error) => {

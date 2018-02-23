@@ -1,3 +1,9 @@
-<p>
-  top works!
-</p>
+<hn-link-item-list 
+    [loading]="loading"
+    [linksToRender]="allLinks"
+    [count]="count"
+    [pageNumber]="pageNumber"
+    [isAuthenticated]="logged"
+    [graphqlQuery]="query"
+    [graphqlQueryOptions]="options"
+></hn-link-item-list>

@@ -50,34 +50,41 @@ export class MainComponent implements OnInit, OnDestroy {
         this.logged = isAuthenticated;
       });
 
-    // this.options = {
-    //   count: 50,
-    //   offset: 0,
-    // };
-
     const pageParams$: Observable<number> = this.route.paramMap
       .map((params) => {
+        // console.log('pageParams');
+        // console.log(params.get('page'));
         return parseInt(params.get('page'), 10);
       });
 
     const path$: Observable<string> = this.route.url
-      .map((segments) => (segments as any).toString());
+      .map((segments) => {
+        // console.log('path');
+        // console.log(segments.toString());
+        return segments.toString();
+      });
 
     this.first$ = path$
       .map((path) => {
+        // console.log('first');
         const isNewPage = path.includes('new');
+        // console.log(isNewPage ? this.linksPerPage : 100);
         return isNewPage ? this.linksPerPage : 100;
       });
 
     this.skip$ = Observable.combineLatest(path$, pageParams$)
       .map(([path, page]) => {
+        // console.log('skip');
         const isNewPage = path.includes('new');
+        // console.log(isNewPage ? (page - 1) * this.linksPerPage : 0);
         return isNewPage ? (page - 1) * this.linksPerPage : 0;
       });
 
-    this.orderBy$ = path$
+      this.orderBy$ = path$
       .map((path) => {
+        // console.log('orderBy');
         const isNewPage = path.includes('new');
+        // console.log(isNewPage ? 'createdAt_DESC' : null);
         return isNewPage ? 'createdAt_DESC' : null;
       });
 
@@ -89,6 +96,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
       query.subscribeToMore({
         document: NEW_LINKS_SUBSCRIPTION,
+        variables: variables,
         updateQuery: (previous, { subscriptionData }) => {
           // TODO: Finde out if Bug and file if so:
           /*
@@ -98,9 +106,11 @@ export class MainComponent implements OnInit, OnDestroy {
           *  (subscriptionData as any).data.Link.node
           * ];
           */
+          // console.log('EXECUTES!');
+          // console.log(subscriptionData);
           const newAllLinks = [
-            ...(previous as any).allLinks,
-            (subscriptionData as any).data.Link.node
+            (subscriptionData as any).data.Link.node,
+            ...(previous as any).allLinks
           ];
           return {
             ...previous,
@@ -111,33 +121,38 @@ export class MainComponent implements OnInit, OnDestroy {
 
       // TODO: Omitted as stated in tutorial, test if this still works
       // when finished with current tutorial part 9-pagination
-      // query.subscribeToMore({
-      //   document: NEW_VOTES_SUBSCRIPTION,
-      //   updateQuery: (previous, { subscriptionData }) => {
-      //     const votedLinkIndex = (previous as any).allLinks.findIndex(link =>
-      //       link.id === (subscriptionData as any).data.Vote.node.link.id
-      //     );
-      //     let newAllLinks;
-      //     if (votedLinkIndex) {
-      //       const node = (subscriptionData as any).data.Vote.node.link;
-      //       newAllLinks = (previous as any).allLinks.slice();
-      //       newAllLinks[votedLinkIndex] = node;
-      //     }
-      //     return {
-      //       ...previous,
-      //       allLinks: newAllLinks
-      //     };
-      //   }
-      // });
+      query.subscribeToMore({
+        document: NEW_VOTES_SUBSCRIPTION,
+        updateQuery: (previous, { subscriptionData }) => {
+          const votedLinkIndex = (previous as any).allLinks.findIndex(link =>
+            link.id === (subscriptionData as any).data.Vote.node.link.id
+          );
+          let newAllLinks;
+          if (votedLinkIndex) {
+            const node = (subscriptionData as any).data.Vote.node.link;
+            newAllLinks = (previous as any).allLinks.slice();
+            newAllLinks[votedLinkIndex] = node;
+          }
+          return {
+            ...previous,
+            allLinks: newAllLinks
+          };
+        }
+      });
 
       return query.valueChanges as Observable<ApolloQueryResult<AllLinkQueryResponse>>;
     };
 
     const allLinkQuery: Observable<ApolloQueryResult<AllLinkQueryResponse>> = Observable
-      .combineLatest( this.first$, this.skip$, this.orderBy$, (first, skip, orderBy) => ({ first, skip, orderBy}))
-      .switchMap((variables: any) => getQuery(variables));
+      .combineLatest( this.first$, this.skip$, this.orderBy$, (first, skip, orderBy) => ( this.options = { first, skip, orderBy}))
+      .switchMap((variables: any) => {
+        // console.log('AllLinkQueryRequest:');
+        // console.log(variables);
+        return getQuery(variables);
+      });
 
     const querySubscription = allLinkQuery.subscribe(response => {
+        console.log('AllLinkQueryResponse');
         this.allLinks = response.data.allLinks;
         this.count = response.data._allLinksMeta.count;
         this.loading = response.data.loading;
@@ -194,7 +209,7 @@ export class MainComponent implements OnInit, OnDestroy {
     //   this.loading = response.data.loading;
     // });
 
-    // this.subscriptions = [...this.subscriptions, querySubscription];
+    this.subscriptions = [...this.subscriptions, querySubscription];
   }
 
   ngOnDestroy(): void {

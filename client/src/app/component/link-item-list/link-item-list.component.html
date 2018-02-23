@@ -1,7 +1,7 @@
 <h4 *ngIf="loading">Loading...</h4>
 <div *ngIf="isNewPage | async">
-    <button *ngIf="!(isFirstPage | async)" (click)="previousPage()">Previous</button>
-    <button *ngIf="!(morePages | async)" (click)="nextPage()">Next</button>
+    <button [disabled]="(firstPage | async)?true:null" (click)="previousPage()">Previous</button>
+    <button [disabled]="!(morePages | async)?true:null" (click)="nextPage()">Next</button>
 </div>
 <hn-link-item *ngFor="let link of ( orderedLinks | async ); let index=index" 
     [link]="link" 
@@ -11,6 +11,6 @@
     >
 </hn-link-item>
 <div *ngIf="isNewPage | async">
-    <button *ngIf="!(isFirstPage | async)" (click)="previousPage()">Previous</button>
-    <button *ngIf="!(morePages | async)" (click)="nextPage()">Next</button>
+    <button [disabled]="(firstPage | async)?true:null" (click)="previousPage()">Previous</button>
+    <button [disabled]="!(morePages | async)?true:null" (click)="nextPage()">Next</button>
 </div>

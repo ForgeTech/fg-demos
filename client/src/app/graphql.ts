@@ -2,12 +2,13 @@ import { Link, User, Vote } from './types';
 import gql from 'graphql-tag';
 
 export const ALL_LINKS_QUERY = gql`
-  query AllLinksQuery( $count: Int = 25, $offset: Int = 0, $orderBy: LinkOrderBy = createdAt_ASC ) {
-    allLinks( first: $count, skip: $offset, orderBy: $orderBy ) {
+  query AllLinksQuery( $first: Int = 25, $skip: Int = 0, $orderBy: LinkOrderBy = createdAt_DESC ) {
+    allLinks( first: $first, skip: $skip, orderBy: $orderBy ) {
       id
       createdAt
       url
       description
+      votesCount
       postedBy {
         id
         name
@@ -34,11 +35,12 @@ export interface AllLinkQueryResponse {
 }
 
 export const CREATE_LINK_MUTATION = gql`
-  mutation CreateLinkMutation($description: String!, $url: String!, $postedById: ID!) {
+  mutation CreateLinkMutation($description: String!, $url: String!, $postedById: ID!, $votesCount: Int!) {
     createLink(
-      description: $description,
-      url: $url,
+      description: $description
+      url: $url
       postedById: $postedById
+      votesCount: $votesCount
     ) {
       id
       createdAt
@@ -55,6 +57,7 @@ export const CREATE_LINK_MUTATION = gql`
 export interface CreateLinkMutationResponse {
   createLink: Link;
   loading: boolean;
+  votesCount: number;
   postedBy: {
     id
     name
@@ -64,8 +67,8 @@ export interface CreateLinkMutationResponse {
 export const CREATE_USER_MUTATION = gql`
   mutation CreateUserMutation($name: String!, $email: String!, $password: String!){
     signupUser(
-      name: $name,
-      email: $email,
+      name: $name
+      email: $email
       password: $password
     ){
       id
@@ -183,6 +186,7 @@ export const NEW_LINKS_SUBSCRIPTION = gql`
         url
         description
         createdAt
+        votesCount
         postedBy {
           id
           name

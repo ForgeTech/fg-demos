@@ -8,7 +8,9 @@ import { Apollo } from 'apollo-angular';
 import { Subscription } from 'rxjs/Subscription';
 import { DataProxy } from 'apollo-cache';
 import { variable } from '@angular/compiler/src/output/output_ast';
-import { _ } from 'lodash';
+// This is the only working syntax to import lodash
+// https://stackoverflow.com/questions/34660265/importing-lodash-into-angular2-typescript-application
+import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -45,9 +47,9 @@ export class LinkItemListComponent {
   linksPerPage: number = 25;
 
   get isNewPage(): Observable<boolean> {
-    return this.route.url
+      return this.route.url
       .map((segments) => segments.toString())
-      .map(path => path.includes('new'));
+      .map(path => path.includes('new') ? true : false);
   }
 
   get curPageNumber(): Observable<number> {
@@ -55,6 +57,10 @@ export class LinkItemListComponent {
       .map((params) => {
         return parseInt(params.get('page'), 10);
       });
+  }
+
+  get firstPage(): Observable<boolean> {
+    return this.curPageNumber.map( pageNumber => pageNumber === 1 );
   }
 
   get morePages(): Observable<boolean> {
@@ -70,9 +76,10 @@ export class LinkItemListComponent {
   @Input()
   graphqlQueryOptions: any = {};
 
-  subscriptions: Subscription[] = [];
+  @Input()
+  count: number;
 
-  count: number = 0;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private $router: Router,
@@ -97,7 +104,6 @@ export class LinkItemListComponent {
       alert(`User (${userId}) already voted for this link.`);
       return;
     }
-
     const mutationSubscription = this.apollo.mutate({
       mutation: CREATE_VOTE_MUTATION,
       variables: {
@@ -113,22 +119,22 @@ export class LinkItemListComponent {
   }
 
   nextPage() {
-    // this.route.paramMap.map((params) => this.pageNumber = parseInt(params.get('page'), 10));
     console.log('nextPage');
-    console.log(this.route.paramMap);
+    const page$ = this.route.paramMap.map((params) => params.get('page'));
+    page$.subscribe( page => this.pageNumber = parseInt(page, 10));
     if (this.pageNumber < this.count / this.linksPerPage) {
       const nextPage = this.pageNumber + 1;
-      this.$router.navigate([{path: `/new/${nextPage}`}]);
+      this.$router.navigate([`/new/${nextPage}`]);
     }
   }
 
   previousPage() {
-    // const page = this.route.paramMap.map((params) => this.pageNumber = parseInt(params.get('page'), 10));
     console.log('previousPage');
- 
+    const page$ = this.route.paramMap.map((params) => params.get('page'));
+    page$.subscribe(page => this.pageNumber = parseInt(page, 10));
     if (this.pageNumber > 1) {
-      const previousPage = this.pageNumber + 1;
-      this.$router.navigate([{ path: `/new/${previousPage}` }]);
+      const previousPage = this.pageNumber - 1;
+      this.$router.navigate([`/new/${previousPage}`]);
     }
   }
 }
