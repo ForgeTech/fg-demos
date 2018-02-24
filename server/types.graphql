@@ -36,7 +36,7 @@ type Link @model {
   # Member non-system fields
   description: String!
   url: String!
-  votesCount: Int! @migrationValue(value: 0)
+  voteCount: Int! @migrationValue(value: 0)
   commentCount: Int!
   # Type relation fields
   postedBy: User @relation(name: "UserLinks")

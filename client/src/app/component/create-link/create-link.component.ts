@@ -41,7 +41,8 @@ export class CreateLinkComponent implements OnInit {
       variables: {
         description: newDescription,
         url: newUrl,
-        votesCount: 0,
+        voteCount: 0,
+        commentCount: 0,
         postedById: postedById
       },
       update: (store, { data: { createLink } }) => {

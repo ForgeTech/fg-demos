@@ -5,6 +5,8 @@ export class Link {
     createdAt?: string;
     postedBy?: User;
     votes?: Vote[];
+    voteCount?: number;
+    commentCount?: number;
 }
 
 export class User {
