@@ -38,11 +38,11 @@ export class LoginComponent implements OnInit {
           password: this.password
         }
       }).subscribe((result) => {
-        console.log(result.data.authenticateUser);
+        console.log('Signin User');
+        console.log(result.data);
         const id = result.data.authenticateUser.id;
         const token = result.data.authenticateUser.token;
         this.saveUserData(id, token);
-
         this.router.navigate(['/']);
       }, (error) => {
         alert(error);
@@ -56,7 +56,8 @@ export class LoginComponent implements OnInit {
           password: this.password
         }
       }).subscribe((result) => {
-        console.log(result.data.authenticateUser);
+        console.log('Create User');
+        console.log(result.data);
         const id = result.data.authenticateUser.id;
         const token = result.data.authenticateUser.token;
         this.saveUserData(id, token);

@@ -1,11 +1,17 @@
-import { Link, User, Vote } from './types';
+import {
+  Link,
+  User,
+  Vote,
+  Comment,
+  CommentVote
+} from './types';
 import gql from 'graphql-tag';
 
 export const ALL_LINKS_QUERY = gql`
   query AllLinksQuery (
     $first: Int = 25,
     $skip: Int = 0,
-    $orderBy: LinkOrderBy = createdAt_DESC 
+    $orderBy: LinkOrderBy = createdAt_DESC
   ) {
     allLinks(
       first: $first,
@@ -92,8 +98,8 @@ export const CREATE_USER_MUTATION = gql`
       email: $email,
       password: $password,
     ){
-      token
       id
+      token
     }
   }
 `;
@@ -112,9 +118,10 @@ export const SIGNIN_USER_MUTATION = gql`
     authenticateUser(
       email: $email,
       password: $password,
-    ){
-      token
+    ) {
       id
+      token
+      name
     }
   }
 `;
