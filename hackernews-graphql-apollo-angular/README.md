@@ -1,6 +1,5 @@
-
 ### Angular Demo-App based on:
-* [ ] Angular GraphQL Demo based How to Graphql https://www.howtographql.com/ angular-apollo tutorial
+* [x] Angular GraphQL Demo based How to Graphql https://www.howtographql.com/ angular-apollo tutorial
 ### What is GraphQl
 * [ ] GRAPHQL in 5 Links https://dev-blog.apollodata.com/the-basics-of-graphql-in-5-links-9e1dc4cac055
 * [ ] GRAPHQL Explained https://dev-blog.apollodata.com/graphql-explained-5844742f195e
