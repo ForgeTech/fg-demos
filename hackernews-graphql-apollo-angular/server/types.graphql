@@ -1,6 +1,14 @@
+# ---------------------------------------------------------------------
 # types.graphql - 
 # This file defines all graphql-schemas of the forge-hackernews
 # applications graphcool graphql backend-service
+#
+# CAUTION!
+# The description for the defined graphql schema-type and 
+# their properties are found in 'types.ts'-file in 
+# 'client/src/app/'-directory, so they are available in the
+# applications documentation
+# ---------------------------------------------------------------------
 
 # ----------------------- Example (Start) -----------------------------
 # The following types define the data model of the example service
@@ -35,10 +43,14 @@ type Link @model {
   updatedAt: DateTime! # read-only (managed by Graphcool)
   # Member non-system fields
   description: String!
-  url: String!
+  url: String! @isUnique
   voteCount: Int! @migrationValue(value: 0)
   commentCount: Int!
   # Type relation fields
+  # CAUTION! 1-N RELATION
+  # An instance of Link can be submitted
+  # exactly by a single user, but a single user
+  # can submit multiple links.
   postedBy: User @relation(name: "UserLinks")
   votes: [Vote!]! @relation(name: "VotesOnLink")
   comments: [Comment!]! @relation(name: "CommentOnLink" )
@@ -52,7 +64,7 @@ type User @model {
   createdAt: DateTime! # read-only (managed by Graphcool)
   updatedAt: DateTime! # read-only (managed by Graphcool)
   # Member non-system fields
-  name: String!
+  name: String! @isUnique
   email: String! @isUnique  
   password: String!
   # Type relation fields
@@ -60,8 +72,6 @@ type User @model {
   votes: [Vote!]! @relation(name: "UsersVotes")
   comments: [Comment!]! @relation(name: "CommentAutor")
   commentVotes: [CommentVote!]! @relation(name: "UsersCommentVotes")
-  responses: [CommentResponse!]! @relation(name: "CommentResponseAutor")
-  responsesVotes: [CommentResponseVote!]! @relation(name: "UsersCommentResponseVotes")
 }
 
 type Vote @model {
@@ -76,18 +86,23 @@ type Vote @model {
 }
 
 type Comment @model {
-# Required system field:
+  # Required system field:
   id: ID! @isUnique # read-only (managed by Graphcool)
   # Optional system fields (remove if not needed):
   createdAt: DateTime! # read-only (managed by Graphcool)
   updatedAt: DateTime! # read-only (man
   # Member non-system fields
   message: String!
+  depth: Int!
   # Type relation fields
   link: Link! @relation(name: "CommentOnLink")
   user: User! @relation(name: "CommentAutor")
-  responses: [CommentResponse!]! @relation(name: "ResponsesOnComment")
   votes: [CommentVote!]! @relation(name: "VoteOnComment")
+  # CAUTION! SELF-REFERENCE
+  # This is an example of a self-reference on 
+  # comment so a comment can also receive comments as a responses
+  parent: Comment @relation(name: "CommentResponse")
+  responses: [Comment!]! @relation(name: "CommentResponses")
 }
 
 type CommentVote @model {
@@ -99,29 +114,4 @@ type CommentVote @model {
   # Type relation fields
   user: User! @relation(name: "UsersCommentVotes")
   comment: Comment! @relation(name: "VoteOnComment")
-}
-
-type CommentResponse @model {
-  # Required system field:
-  id: ID! @isUnique # read-only (managed by Graphcool)
-  # Optional system fields (remove if not needed):
-  createdAt: DateTime! # read-only (managed by Graphcool)
-  updatedAt: DateTime! # read-only (man
-  # Member non-system fields
-  message: String!
-  # Type relation fields
-  comment: Comment!  @relation(name: "ResponsesOnComment")
-  user: User! @relation(name: "CommentResponseAutor")
-  votes: [CommentResponseVote!]! @relation(name: "VoteOnCommentResponse")
-}
-
-type CommentResponseVote @model {
-  # Required system field:
-  id: ID! @isUnique # read-only (managed by Graphcool)
-  # Optional system fields (remove if not needed):
-  createdAt: DateTime! # read-only (managed by Graphcool)
-  updatedAt: DateTime! # read-only (man
-  # Type relation fields
-  user: User! @relation(name: "UsersCommentResponseVotes")
-  response: CommentResponse! @relation(name: "VoteOnCommentResponse")
 }
