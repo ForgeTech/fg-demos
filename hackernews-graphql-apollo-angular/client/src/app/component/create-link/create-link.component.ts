@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { ALL_LINKS_QUERY, CREATE_LINK_MUTATION, CreateLinkMutationResponse } from '../../graphql';
 import { ApolloLink } from 'apollo-link';
 import { AppRoutingModule } from '../../app.routing';
 import { Router } from '@angular/router';
-import { GC_USER_ID } from './../../constants';
+import { AUTH_USER_ID } from './../../constants';
+import {
+  ALL_LINKS_QUERY,
+  CREATE_LINK_MUTATION,
+  CreateLinkMutationResponse
+} from '../../graphql';
 
 @Component({
   selector: 'hn-create-link',
@@ -25,7 +29,7 @@ export class CreateLinkComponent implements OnInit {
   ngOnInit() { }
 
   createLink() {
-    const postedById = localStorage.getItem(GC_USER_ID);
+    const postedById = localStorage.getItem(AUTH_USER_ID);
     if (!postedById) {
       console.error('No user logged in');
       return;

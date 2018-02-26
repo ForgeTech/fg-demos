@@ -11,27 +11,30 @@ export const ALL_LINKS_QUERY = gql`
   query AllLinksQuery (
     $first: Int = 25,
     $skip: Int = 0,
-    $orderBy: LinkOrderBy = createdAt_DESC
+    $orderBy: LinkOrderBy = createdAt_DESC,
+    $searchText: String = ""
   ) {
     allLinks(
       first: $first,
       skip: $skip,
-      orderBy: $orderBy
+      orderBy: $orderBy,
+      filter: {
+      OR: [{
+        url_contains: $searchText
+      }, {
+        description_contains: $searchText
+      }]
+    }
     ) {
       id
       createdAt
       url
       description
       voteCount
+      commentCount
       postedBy {
         id
         name
-      }
-      votes {
-        id
-        user {
-          id
-        }
       }
     }
     _allLinksMeta {
@@ -40,7 +43,7 @@ export const ALL_LINKS_QUERY = gql`
   }
 `;
 
-export interface AllLinkQueryResponse {
+export interface AllLinksQueryResponse {
   allLinks: Link[];
   loading: boolean;
   _allLinksMeta: {
@@ -96,10 +99,11 @@ export const CREATE_USER_MUTATION = gql`
     }
     authenticateUser(
       email: $email,
-      password: $password,
+      password: $password
     ){
       id
       token
+      name
     }
   }
 `;
@@ -159,41 +163,6 @@ export interface CreateVoteMutationResponse {
     id: string;
     link: Link;
     user: User;
-  };
-}
-
-export const ALL_LINKS_SEARCH_QUERY = gql`
-  query AllLinksSearchQuery($searchText: String!) {
-    allLinks(filter: {
-      OR: [{
-        url_contains: $searchText
-      }, {
-        description_contains: $searchText
-      }]
-    }) {
-      id
-      url
-      description
-      createdAt
-      postedBy {
-        id
-        name
-      }
-      votes {
-        id
-        user {
-          id
-        }
-      }
-    }
-  }
-`;
-
-export interface AllLinksSearchQueryResponse {
-  loading: boolean;
-  allLinks: Link[];
-  _allLinksMeta: {
-    count: number
   };
 }
 
@@ -260,4 +229,44 @@ export const NEW_VOTES_SUBSCRIPTION = gql`
 
 export interface NewVoteSubcriptionResponse {
   node: Vote;
+}
+
+export const CREATE_COMMENT_MUTATION = gql`
+mutation CreateComment(
+  $linkId: ID!,
+  $userId: ID!,
+  $depth: Int!,
+  $message: String!
+) {
+  createComment (
+    linkId: $linkId,
+    userId: $userId,
+    depth: $depth,
+		message: $message
+  ) {
+    id
+    message
+    depth
+    link {
+      id
+      description
+      url
+    }
+    user {
+      id
+      name
+    }
+  }
+}
+`;
+
+export interface CreateCommentMutationResponse {
+  loading: boolean;
+  createComment: {
+    id: string;
+    message: string;
+    depth: number;
+    user: User;
+    link: Link;
+  };
 }

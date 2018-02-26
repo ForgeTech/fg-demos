@@ -20,21 +20,20 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { ApolloLink } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { getOperationAST } from 'graphql';
-import { GC_AUTH_TOKEN } from './constants';
+import { AUTH_USER_TOKEN } from './constants';
 
 @NgModule({
     exports: [
-        // 2
         HttpClientModule,
         ApolloModule,
-        HttpLinkModule,
+        HttpLinkModule
     ],
 })
 export class GraphQLModule {
 
     constructor(apollo: Apollo, httpLink: HttpLink) {
         const uri = 'https://api.graph.cool/simple/v1/cjd7lhvu528sq0139ryabkjbk';
-        const token = localStorage.getItem(GC_AUTH_TOKEN);
+        const token = localStorage.getItem(AUTH_USER_TOKEN);
         const authorization = token ? `Bearer ${token}` : null;
         const headers = new HttpHeaders();
         headers.append('Authorization', authorization);
@@ -46,7 +45,7 @@ export class GraphQLModule {
             options: {
                 reconnect: true,
                 connectionParams: {
-                    authToken: localStorage.getItem(GC_AUTH_TOKEN),
+                    authToken: localStorage.getItem(AUTH_USER_TOKEN),
                 }
             }
         });

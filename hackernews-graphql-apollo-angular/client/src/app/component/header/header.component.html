@@ -12,7 +12,8 @@
     </div>
   </div>
   <div class="flex flex-fixed">
-    <div *ngIf="logged" class="ml1 pointer black" (click)="logout()">logout</div>
+    <div *ngIf="logged" class="ml1 pointer black" >{{userName}}</div>
+    <div *ngIf="logged" class="ml1 pointer black" (click)="logout()">(logout)</div>
     <a *ngIf="!logged" [routerLink]="['/login']" class='ml1 no-underline black'>login</a>
   </div>
 </div>

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// 1
 import { LinkItemListComponent } from './component/link-item-list/link-item-list.component';
 import { CreateLinkComponent } from './component/create-link/create-link.component';
 import { LoginComponent } from './component/login/login.component';
@@ -51,7 +50,6 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        // 3
         RouterModule.forRoot(routes)
     ],
     exports: [RouterModule]

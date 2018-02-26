@@ -9,6 +9,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 })
 export class HeaderComponent implements OnInit {
   logged: boolean = false;
+  userName: string = '';
 
   constructor(private authService: AuthService) {
   }
@@ -18,6 +19,7 @@ export class HeaderComponent implements OnInit {
       .distinctUntilChanged() // Only emit when the current value is different than the last
       .subscribe(isAuthenticated => {
         this.logged = isAuthenticated;
+        this.userName = this.authService.userName;
       });
 
   }

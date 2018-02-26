@@ -4,7 +4,7 @@ import { Apollo } from 'apollo-angular';
 import { Subscription } from 'rxjs/Subscription';
 import { Link } from './../../types';
 // 2
-import { ALL_LINKS_SEARCH_QUERY, AllLinksSearchQueryResponse } from './../../graphql';
+import { ALL_LINKS_QUERY, AllLinksQueryResponse } from './../../graphql';
 
 @Component({
   selector: 'hn-search',
@@ -16,7 +16,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   searchText: string = '';
   logged: boolean = false;
-  query: any = ALL_LINKS_SEARCH_QUERY;
+  query: any = ALL_LINKS_QUERY;
   options: any = {};
 
   subscriptions: Subscription[] = [];
@@ -41,7 +41,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.options = {
       searchText: this.searchText
     };
-    const querySubscription = this.apollo.watchQuery<AllLinksSearchQueryResponse>({
+    const querySubscription = this.apollo.watchQuery<AllLinksQueryResponse>({
       query: this.query,
       variables: this.options
     }).valueChanges.subscribe((response) => {

@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../../auth.service';
-import { GC_AUTH_TOKEN, GC_USER_ID } from './../../constants';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
+import {
+  AUTH_USER_ID,
+  AUTH_USER_NAME,
+  AUTH_USER_TOKEN
+} from './../../constants';
 import {
   CREATE_USER_MUTATION,
   CreateUserMutationResponse,
@@ -42,7 +46,8 @@ export class LoginComponent implements OnInit {
         console.log(result.data);
         const id = result.data.authenticateUser.id;
         const token = result.data.authenticateUser.token;
-        this.saveUserData(id, token);
+        const name = result.data.authenticateUser.name;
+        this.saveUserData(id, token, name);
         this.router.navigate(['/']);
       }, (error) => {
         alert(error);
@@ -60,8 +65,8 @@ export class LoginComponent implements OnInit {
         console.log(result.data);
         const id = result.data.authenticateUser.id;
         const token = result.data.authenticateUser.token;
-        this.saveUserData(id, token);
-
+        const name = result.data.authenticateUser.name;
+        this.saveUserData(id, token, name);
         this.router.navigate(['/']);
 
       }, (error) => {
@@ -70,9 +75,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  saveUserData(id, token) {
-    localStorage.setItem(GC_USER_ID, id);
-    localStorage.setItem(GC_AUTH_TOKEN, token);
-    this.authService.setUserId(id);
+  saveUserData(id: string, token: string, name: string) {
+    localStorage.setItem(AUTH_USER_ID, id);
+    localStorage.setItem(AUTH_USER_TOKEN, token);
+    localStorage.setItem(AUTH_USER_NAME, name);
+    this.authService.setUserId(id, name);
   }
 }

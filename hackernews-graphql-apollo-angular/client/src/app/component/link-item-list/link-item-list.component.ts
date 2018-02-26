@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Link, Vote } from '../../types';
 import gql from 'graphql-tag';
 import { CREATE_VOTE_MUTATION, ALL_LINKS_QUERY } from './../../graphql';
-import { GC_USER_ID } from './../../constants';
+import { AUTH_USER_ID } from './../../constants';
 import { Apollo } from 'apollo-angular';
 import { Subscription } from 'rxjs/Subscription';
 import { DataProxy } from 'apollo-cache';
@@ -98,7 +98,7 @@ export class LinkItemListComponent {
   }
 
   voteForLink(link: Link) {
-    const userId = localStorage.getItem(GC_USER_ID);
+    const userId = localStorage.getItem(AUTH_USER_ID);
     const voterIds = link.votes.map(vote => vote.user.id);
     if (voterIds.includes(userId)) {
       alert(`User (${userId}) already voted for this link.`);

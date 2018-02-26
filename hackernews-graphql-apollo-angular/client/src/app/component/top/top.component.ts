@@ -12,7 +12,7 @@ import { AuthService } from './../../auth.service';
 import { Link } from '../../types';
 import {
   ALL_LINKS_QUERY,
-  AllLinkQueryResponse,
+  AllLinksQueryResponse,
   NEW_LINKS_SUBSCRIPTION,
   NEW_VOTES_SUBSCRIPTION
 } from './../../graphql';
@@ -88,7 +88,7 @@ export class TopComponent implements OnInit, OnDestroy {
         return isNewPage ? 'createdAt_DESC' : null;
       });
 
-    const getQuery = (variables): Observable<ApolloQueryResult<AllLinkQueryResponse>> => {
+    const getQuery = (variables): Observable<ApolloQueryResult<AllLinksQueryResponse>> => {
       const query = this.apollo.watchQuery({
         query: ALL_LINKS_QUERY,
         variables
@@ -131,10 +131,10 @@ export class TopComponent implements OnInit, OnDestroy {
         }
       });
 
-      return query.valueChanges as Observable<ApolloQueryResult<AllLinkQueryResponse>>;
+      return query.valueChanges as Observable<ApolloQueryResult<AllLinksQueryResponse>>;
     };
 
-    const allLinkQuery: Observable<ApolloQueryResult<AllLinkQueryResponse>> = Observable
+    const allLinkQuery: Observable<ApolloQueryResult<AllLinksQueryResponse>> = Observable
       .combineLatest(this.first$, this.skip$, this.orderBy$, (first, skip, orderBy) => (this.options = { first, skip, orderBy }))
       .switchMap((variables: any) => {
         // console.log('AllLinkQueryRequest:');
@@ -143,7 +143,7 @@ export class TopComponent implements OnInit, OnDestroy {
       });
 
     const querySubscription = allLinkQuery.subscribe(response => {
-      console.log('AllLinkQueryResponse');
+      console.log('AllLinksQueryResponse');
       this.allLinks = response.data.allLinks;
       this.count = response.data._allLinksMeta.count;
       this.loading = response.data.loading;
