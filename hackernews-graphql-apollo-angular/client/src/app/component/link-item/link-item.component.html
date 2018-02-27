@@ -6,7 +6,7 @@
   <div class="ml1">
     <a [href]="link.url" class="link">{{link.description}} ({{link.url}})</a>
     <div class="f6 lh-copy gray">
-      {{link.votes.length}} votes | by {{link.postedBy ? link.postedBy.name : 'Unknown'}} {{humanizeDate(link.createdAt)}}
+      {{link.voteCount}} votes | by {{link.postedBy ? link.postedBy.name : 'Unknown'}} {{humanizeDate(link.createdAt)}}
     </div>
   </div>
 </div>

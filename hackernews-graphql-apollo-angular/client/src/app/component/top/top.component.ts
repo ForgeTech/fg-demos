@@ -16,7 +16,7 @@ import {
   NEW_LINKS_SUBSCRIPTION,
   NEW_VOTES_SUBSCRIPTION
 } from './../../graphql';
-import { FG_LINKS_PER_PAGE } from './../../constants';
+import { PAGINATION_LINKS_PER_PAGE } from './../../constants';
 
 @Component({
   selector: 'hn-main',
@@ -31,7 +31,7 @@ export class TopComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   query: any = ALL_LINKS_QUERY;
   options: any = {};
-  linksPerPage: number = FG_LINKS_PER_PAGE;
+  linksPerPage: number = PAGINATION_LINKS_PER_PAGE;
   count: number;
   first$: Observable<number>;
   skip$: Observable<number>;
@@ -69,7 +69,7 @@ export class TopComponent implements OnInit, OnDestroy {
         // console.log('first');
         const isNewPage = path.includes('new');
         // console.log(isNewPage ? this.linksPerPage : 100);
-        return isNewPage ? this.linksPerPage : 100;
+        return this.linksPerPage;
       });
 
     this.skip$ = Observable.combineLatest(path$, pageParams$)

@@ -31,6 +31,12 @@ export const ALL_LINKS_QUERY = gql`
       url
       description
       voteCount
+      votes {
+        id
+        user {
+          id
+        }
+      }
       commentCount
       postedBy {
         id
@@ -139,10 +145,20 @@ export interface SigninUserMutationResponse {
 }
 
 export const CREATE_VOTE_MUTATION = gql`
-  mutation CreateVoteMutation($userId: ID!, $linkId: ID!) {
-    createVote(userId: $userId, linkId: $linkId) {
+  mutation CreateVoteMutation($userId: ID!, $linkId: ID!, $voteCount: Int!) {
+    updateLink(
+      id: $linkId,
+      voteCount: $voteCount
+    ){
+    	id
+  	}
+  	createVote(
+      userId: $userId,
+      linkId: $linkId
+    ) {
       id
       link {
+        voteCount
         votes {
           id
           user {
@@ -177,6 +193,7 @@ export const NEW_LINKS_SUBSCRIPTION = gql`
         description
         createdAt
         voteCount
+        commentCount
         postedBy {
           id
           name
@@ -212,6 +229,7 @@ export const NEW_VOTES_SUBSCRIPTION = gql`
             id
             name
           }
+          voteCount
           votes {
             id
             user {

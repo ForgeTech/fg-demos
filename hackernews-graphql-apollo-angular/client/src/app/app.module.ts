@@ -14,6 +14,8 @@ import { SearchComponent } from './component/search/search.component';
 import { MainComponent } from './component/main/main.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { TopComponent } from './component/top/top.component';
+import { PageHttp404Component } from './component/page-http-404/page-http-404.component';
+import { PageLinkComponent } from './component/page-link/page-link.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { TopComponent } from './component/top/top.component';
     SearchComponent,
     MainComponent,
     FooterComponent,
-    TopComponent
+    TopComponent,
+    PageHttp404Component,
+    PageLinkComponent
   ],
   imports: [
     AppRoutingModule,

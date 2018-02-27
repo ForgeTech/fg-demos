@@ -1,16 +1,16 @@
 <h4 *ngIf="loading">Loading...</h4>
-<div *ngIf="isNewPage | async">
+<div>
     <button [disabled]="(firstPage | async)?true:null" (click)="previousPage()">Previous</button>
     <button [disabled]="!(morePages | async)?true:null" (click)="nextPage()">Next</button>
 </div>
-<hn-link-item *ngFor="let link of ( orderedLinks | async ); let index=index" 
+<hn-link-item *ngFor="let link of linksToRender; let index=index" 
     [link]="link" 
-    [index]="index" 
+    [index]="pagedIndex(index)" 
     [isAuthenticated]="isAuthenticated"
     (linkUpvoteEvent)="voteForLink($event.link)"
     >
 </hn-link-item>
-<div *ngIf="isNewPage | async">
+<div>
     <button [disabled]="(firstPage | async)?true:null" (click)="previousPage()">Previous</button>
     <button [disabled]="!(morePages | async)?true:null" (click)="nextPage()">Next</button>
 </div>

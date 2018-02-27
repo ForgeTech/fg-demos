@@ -16,7 +16,7 @@ import {
   NEW_LINKS_SUBSCRIPTION,
   NEW_VOTES_SUBSCRIPTION
 } from './../../graphql';
-import { FG_LINKS_PER_PAGE } from './../../constants';
+import { PAGINATION_LINKS_PER_PAGE } from './../../constants';
 
 @Component({
   selector: 'hn-main',
@@ -31,7 +31,7 @@ export class MainComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   query: any = ALL_LINKS_QUERY;
   options: any = {};
-  linksPerPage: number = FG_LINKS_PER_PAGE;
+  linksPerPage: number = PAGINATION_LINKS_PER_PAGE;
   count: number;
   first$: Observable<number>;
   skip$: Observable<number>;
@@ -66,10 +66,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.first$ = path$
       .map((path) => {
-        // console.log('first');
-        const isNewPage = path.includes('new');
-        // console.log(isNewPage ? this.linksPerPage : 100);
-        return isNewPage ? this.linksPerPage : 100;
+        return this.linksPerPage;
       });
 
     this.skip$ = Observable.combineLatest(path$, pageParams$)
@@ -80,9 +77,8 @@ export class MainComponent implements OnInit, OnDestroy {
         return isNewPage ? (page - 1) * this.linksPerPage : 0;
       });
 
-      this.orderBy$ = path$
-      .map((path) => {
-        // console.log('orderBy');
+      this.orderBy$ = path$.map((path) => {
+         // console.log('orderBy');
         const isNewPage = path.includes('new');
         // console.log(isNewPage ? 'createdAt_DESC' : null);
         return isNewPage ? 'createdAt_DESC' : null;
@@ -98,6 +94,8 @@ export class MainComponent implements OnInit, OnDestroy {
         document: NEW_LINKS_SUBSCRIPTION,
         variables: variables,
         updateQuery: (previous, { subscriptionData }) => {
+          console.log('NEW_LINKS_SUBSCRIPTION');
+          console.log(subscriptionData);
           // TODO: Finde out if Bug and file if so:
           /*
           * const newAllLinks = [
@@ -124,6 +122,8 @@ export class MainComponent implements OnInit, OnDestroy {
       query.subscribeToMore({
         document: NEW_VOTES_SUBSCRIPTION,
         updateQuery: (previous, { subscriptionData }) => {
+          console.log('NEW_VOTE_SUBSCRIPTION');
+          console.log(subscriptionData);
           const votedLinkIndex = (previous as any).allLinks.findIndex(link =>
             link.id === (subscriptionData as any).data.Vote.node.link.id
           );

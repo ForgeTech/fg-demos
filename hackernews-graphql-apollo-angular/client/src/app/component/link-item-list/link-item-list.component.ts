@@ -14,12 +14,11 @@ import {
 } from './../../graphql';
 import {
   AUTH_USER_ID,
-  FG_LINKS_PER_PAGE
+  PAGINATION_LINKS_PER_PAGE
 } from './../../constants';
 import { Apollo } from 'apollo-angular';
 import { Subscription } from 'rxjs/Subscription';
 import { DataProxy } from 'apollo-cache';
-import { variable } from '@angular/compiler/src/output/output_ast';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -41,7 +40,7 @@ export class LinkItemListComponent {
   pageNumber: number = 1;
 
   @Input()
-  linksPerPage: number = FG_LINKS_PER_PAGE;
+  linksPerPage: number = PAGINATION_LINKS_PER_PAGE;
 
   get curPageNumber(): Observable<number> {
     return this.route.paramMap
