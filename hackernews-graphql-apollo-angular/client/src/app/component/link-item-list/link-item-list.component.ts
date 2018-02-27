@@ -1,16 +1,25 @@
-import { Component, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  Component,
+  Input
+} from '@angular/core';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
 import { Link, Vote } from '../../types';
 import gql from 'graphql-tag';
-import { CREATE_VOTE_MUTATION, ALL_LINKS_QUERY } from './../../graphql';
-import { AUTH_USER_ID } from './../../constants';
+import {
+  CREATE_VOTE_MUTATION,
+  ALL_LINKS_QUERY
+} from './../../graphql';
+import {
+  AUTH_USER_ID,
+  FG_LINKS_PER_PAGE
+} from './../../constants';
 import { Apollo } from 'apollo-angular';
 import { Subscription } from 'rxjs/Subscription';
 import { DataProxy } from 'apollo-cache';
 import { variable } from '@angular/compiler/src/output/output_ast';
-// This is the only working syntax to import lodash
-// https://stackoverflow.com/questions/34660265/importing-lodash-into-angular2-typescript-application
-import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -28,29 +37,11 @@ export class LinkItemListComponent {
   @Input()
   linksToRender: Link[];
 
-  get orderedLinks(): Observable<Link[]> {
-    return this.route.url
-      .map((segments) => segments.toString())
-      .map(path => {
-        if (path.includes('top')) {
-          return _.orderBy(this.linksToRender, 'votes.length').reverse();
-        } else {
-          return this.linksToRender;
-        }
-      });
-  }
-
   @Input()
   pageNumber: number = 1;
 
   @Input()
-  linksPerPage: number = 25;
-
-  get isNewPage(): Observable<boolean> {
-      return this.route.url
-      .map((segments) => segments.toString())
-      .map(path => path.includes('new') ? true : false);
-  }
+  linksPerPage: number = FG_LINKS_PER_PAGE;
 
   get curPageNumber(): Observable<number> {
     return this.route.paramMap
@@ -92,14 +83,20 @@ export class LinkItemListComponent {
       query: this.graphqlQuery,
       variables: this.graphqlQueryOptions
     });
+    console.log('UpdateStore:');
+    console.log(createdVote);
+    console.log(updateLink);
     const votedLink = (data as any).allLinks.find(link => link.id === updateLink.id);
+    const voteCount = updateLink.voteCount + 1;
     votedLink.votes = createdVote.link.votes;
+    votedLink.voteCount = voteCount;
     store.writeQuery({ query: this.graphqlQuery, data });
   }
 
   voteForLink(link: Link) {
     const userId = localStorage.getItem(AUTH_USER_ID);
     const voterIds = link.votes.map(vote => vote.user.id);
+    const voteCount = link.voteCount + 1;
     if (voterIds.includes(userId)) {
       alert(`User (${userId}) already voted for this link.`);
       return;
@@ -108,7 +105,8 @@ export class LinkItemListComponent {
       mutation: CREATE_VOTE_MUTATION,
       variables: {
         userId: userId,
-        linkId: link.id
+        linkId: link.id,
+        voteCount: voteCount
       },
       update: (store, { data: { createVote } }) => {
         this.updateStoreAfterVote(store, createVote, link);
@@ -118,23 +116,34 @@ export class LinkItemListComponent {
     this.subscriptions = [...this.subscriptions, mutationSubscription];
   }
 
+  pagedIndex( index: number ): number {
+    return index + this.linksPerPage * (this.pageNumber - 1);
+  }
+
   nextPage() {
-    console.log('nextPage');
-    const page$ = this.route.paramMap.map((params) => params.get('page'));
-    page$.subscribe( page => this.pageNumber = parseInt(page, 10));
-    if (this.pageNumber < this.count / this.linksPerPage) {
-      const nextPage = this.pageNumber + 1;
-      this.$router.navigate([`/new/${nextPage}`]);
-    }
+    const path$ = this.route.pathFromRoot.map((segment) => segment.toString());
+    const page$: Observable<number> = this.route.paramMap.map((params) => parseInt(params.get('page'), 10));
+    const pathChange$: Observable<[any, number]> = Observable.combineLatest(path$, page$);
+
+    pathChange$.subscribe( ([path, page]) => {
+      console.log('NEXTPAGE');
+      console.log(path);
+      console.log(page);
+      // if (page < this.count / this.linksPerPage) {
+      //   const nextPage = this.pageNumber + 1;
+      //   this.$router.navigate([`/new/${nextPage}`]);
+      // }
+    });
+    // page$.subscribe( page => this.pageNumber = parseInt(page, 10));
   }
 
   previousPage() {
     console.log('previousPage');
     const page$ = this.route.paramMap.map((params) => params.get('page'));
-    page$.subscribe(page => this.pageNumber = parseInt(page, 10));
-    if (this.pageNumber > 1) {
-      const previousPage = this.pageNumber - 1;
-      this.$router.navigate([`/new/${previousPage}`]);
-    }
+    // page$.subscribe(page => this.pageNumber = parseInt(page, 10));
+    // if (this.pageNumber > 1) {
+    //   const previousPage = this.pageNumber - 1;
+    //   this.$router.navigate([`/new/${previousPage}`]);
+    // }
   }
 }
