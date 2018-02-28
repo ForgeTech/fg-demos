@@ -1,0 +1,36 @@
+.page-wrapper {
+    width: 960px;
+    /* Needed for Sticky-Footer 
+     * implementation (Start) */
+    height: 100%;
+    margin: 0 auto 0 auto;
+    /*Sticky-Footer-End*/
+}
+
+/*
+ * Sticky-Footer - Implementation for 
+ * footer with fixed height
+ * https: //css-tricks.com/couple-takes-sticky-footer/ 
+ * CAUTION! html, body and wrapping elements
+ * need to be set to height of 100% */
+.sticky-footer--wrapper {
+  min-height: 100%;
+  /* Equal to height of footer-parent
+   * But also accounting for potential 
+   * margin-bottom of last child */
+  margin-bottom: -60px;
+}
+/* Style is used on placeholder-element 
+ * to reserve the space for the 
+ * actual footer-element, within the
+ * sticky-footer--wrapper */
+.sticky-footer--position,
+/* Style for the footer-parent element */
+.sticky-footer--footer 
+{
+  /* height has to match the height of the 
+   * footer-element embeded into the footer-
+   * parent */
+  height: 60px;
+}
+

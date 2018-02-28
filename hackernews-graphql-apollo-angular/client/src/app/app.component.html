@@ -1,7 +1,12 @@
-<div class="center w85">
-    <hn-header></hn-header>
-    <div class='ph3 pv1 background-gray'>
-        <router-outlet></router-outlet>
+<div class="page-wrapper background-gray">
+    <div class="sticky-footer--wrapper w100">
+        <hn-header></hn-header>
+        <div class='ph3 pv1'>
+            <router-outlet></router-outlet>
+        </div>
+        <div class="sticky-footer--position"></div>
     </div>
-    <hn-footer></hn-footer>
+    <div class="sticky-footer--footer">
+        <hn-footer></hn-footer>
+    </div>
 </div>
