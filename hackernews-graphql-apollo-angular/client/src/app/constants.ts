@@ -18,7 +18,7 @@ export const AUTH_USER_NAME = 'auth-user-name';
  * how many link-items should be displayed per
  * link-item-list page
 */
-export const PAGINATION_LINKS_PER_PAGE = 3;
+export const PAGINATION_LINKS_PER_PAGE = 25;
 /**
  * Parameter key used in links-route to hold the
  * current-page-value
@@ -46,10 +46,6 @@ export const ROUTE_LINKS_NEW = 'new';
  */
 export const ROUTE_LINKS_TOP = 'top';
 /**
- * Url-Part of the route to comments-page
- */
-export const ROUTE_COMMENTS_DEFAULT = 'comments';
-/**
  * Parameter key used in comment-route to hold the
  * id of the comment to be displayed
 */
@@ -58,6 +54,10 @@ export const ROUTE_COMMENT_ID_PARAM_KEY = ':comment-id';
  * Url-Part of the route to single comment-page
 */
 export const ROUTE_COMMENT_DEFAULT = 'comment';
+/**
+ * Url-Part of the route to comments-page
+ */
+export const ROUTE_COMMENTS_DEFAULT = 'comments';
 /**
  * Parameter key used in search-links-route to hold the
  * search-terms to filter the links by.

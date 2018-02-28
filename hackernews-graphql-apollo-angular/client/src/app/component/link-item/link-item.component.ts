@@ -3,10 +3,30 @@ import { Link } from '../../types';
 import { timeDifferenceForDate } from './../../app.utils';
 import { DataProxy } from 'apollo-cache';
 import { Subscription } from 'rxjs/Subscription';
-
+import {
+  ROUTE_LINK_DEFAULT
+} from './../../constants';
 @Component({
   selector: 'hn-link-item',
-  templateUrl: './link-item.component.html',
+  template: `
+  <div class="flex mt2 items-start">
+    <div class="flex items-center">
+      <span class="gray">{{index+1}}.</span>
+      <div *ngIf="isAuthenticated" class="ml1 gray f11 upvote" (click)="dispatchUpvoteEvent()">▲</div>
+    </div>
+    <div class="ml1">
+      <a [href]="link.url" class="link">{{link.description}} ({{link.url}})</a>
+      <div class="f6 lh-copy gray">
+        {{link.voteCount}} votes
+        | by {{link.postedBy ? link.postedBy.name : 'Unknown'}}
+        | {{humanizeDate(link.createdAt)}}
+        <a [routerLink]="['/${ROUTE_LINK_DEFAULT}', link.id]" class="no-underline gray">
+        | Comments({{link.commentCount}})
+        </a>
+      </div>
+    </div>
+  </div>
+  `,
   styleUrls: ['./link-item.component.css']
 })
 export class LinkItemComponent {

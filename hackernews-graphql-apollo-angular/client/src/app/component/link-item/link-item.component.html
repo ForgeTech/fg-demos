@@ -6,7 +6,12 @@
   <div class="ml1">
     <a [href]="link.url" class="link">{{link.description}} ({{link.url}})</a>
     <div class="f6 lh-copy gray">
-      {{link.voteCount}} votes | by {{link.postedBy ? link.postedBy.name : 'Unknown'}} {{humanizeDate(link.createdAt)}}
+      {{link.voteCount}} votes 
+      | by {{link.postedBy ? link.postedBy.name : 'Unknown'}}
+      | {{humanizeDate(link.createdAt)}}
+      <a [routerLink]="['${ROUTE_LINKS_TOP}']" class="no-underline gray">
+      | Comments({{link.commentCount}})
+      </a>
     </div>
   </div>
 </div>

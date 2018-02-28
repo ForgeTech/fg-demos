@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LinkItemListComponent } from './component/link-item-list/link-item-list.component';
-import { CreateLinkComponent } from './component/create-link/create-link.component';
-import { LoginComponent } from './component/login/login.component';
-import { SearchComponent } from './component/search/search.component';
-import { MainComponent } from './component/main/main.component';
-import { TopComponent } from './component/top/top.component';
-import { PageHttp404Component } from './component/page-http-404/page-http-404.component';
 import { PageLinkComponent } from './component/page-link/page-link.component';
+import { PageMainComponent } from './component/page-main/page-main.component';
+import { PageNewComponent } from './component/page-new/page-new.component';
+import { PageTopComponent } from './component/page-top/page-top.component';
+import { PageCommentComponent } from './component/page-comment/page-comment.component';
+import { PageCommentsComponent } from './component/page-comments/page-comments.component';
+import { PageLinkSubmitComponent } from './component/page-link-submit/page-link-submit.component';
+import { PageSearchComponent } from './component/page-search/page-search.component';
+import { PageLoginComponent } from './component/page-login/page-login.component';
+import { PageUserComponent } from './component/page-user/page-user.component';
+import { PageHttp404Component } from './component/page-http-404/page-http-404.component';
 
 import {
     PAGINATION_PARAM_KEY,
@@ -17,14 +20,16 @@ import {
     ROUTE_LINKS_DEFAULT,
     ROUTE_LINKS_NEW,
     ROUTE_LINKS_TOP,
-    ROUTE_COMMENTS_DEFAULT,
     ROUTE_COMMENT_DEFAULT,
+    ROUTE_COMMENT_ID_PARAM_KEY,
+    ROUTE_COMMENTS_DEFAULT,
     ROUTE_SUBMIT_DEFAULT,
     ROUTE_SEARCH_DEFAULT,
+    ROUTE_SEARCH_TERM_PARAM_KEY,
     ROUTE_LOGIN_DEFAULT,
-    ROUTE_COMMENT_ID_PARAM_KEY,
+    ROUTE_USER_DEFAULT,
+    ROUTE_USER_ID_PARAM_KEY,
     ROUTE_HTTP_404_DEFAULT,
-    ROUTE_SEARCH_TERM_PARAM_KEY
 } from './constants';
 
 /**
@@ -58,7 +63,7 @@ const routes: Routes = [
     // Defines route to default-ordered links-page with attached pagination param-key
     {
         path: [ROUTE_LINKS_DEFAULT, PAGINATION_PARAM_KEY].join('/'),
-        component: MainComponent,
+        component: PageMainComponent,
         pathMatch: 'full'
     },
     // If pagination-parameter is not passed redirect user to
@@ -71,7 +76,7 @@ const routes: Routes = [
     // Defines route to new-links-page with attached pagination param-key
     {
         path: [ROUTE_LINKS_NEW, PAGINATION_PARAM_KEY].join('/'),
-        component: MainComponent,
+        component: PageNewComponent,
         pathMatch: 'full'
     },
     // If pagination-parameter is not passed redirect user to
@@ -85,7 +90,7 @@ const routes: Routes = [
     // attached pagination param-key
     {
         path: [ROUTE_LINKS_TOP, PAGINATION_PARAM_KEY].join('/'),
-        component: TopComponent,
+        component: PageTopComponent,
         pathMatch: 'full'
     },
     // Defines route to single comment-page with attached comment-id param-key
@@ -93,33 +98,55 @@ const routes: Routes = [
     // is redirected to http-404
     {
         path: [ROUTE_COMMENT_DEFAULT, ROUTE_COMMENT_ID_PARAM_KEY].join('/'),
-        component: TopComponent,
+        component: PageCommentComponent,
+        pathMatch: 'full'
+    },
+    // If pagination-parameter is not passed redirect user to
+    // first page of top-voted comments
+    {
+        path: ROUTE_COMMENTS_DEFAULT,
+        pathMatch: 'full',
+        redirectTo: [ROUTE_COMMENTS_DEFAULT, 1].join('/')
+    },
+    // Defines route to page holding top-voted comments with
+    // attached pagination param-key
+    {
+        path: [ROUTE_COMMENTS_DEFAULT, PAGINATION_PARAM_KEY].join('/'),
+        component: PageCommentsComponent,
         pathMatch: 'full'
     },
     // Defines route to 'Submit a new link'-page
     {
         path: ROUTE_SUBMIT_DEFAULT,
-        component: CreateLinkComponent,
-        pathMatch: 'full'
-    },
-    // Defines route to 'user login'-page
-    {
-        path: ROUTE_LOGIN_DEFAULT,
-        component: LoginComponent,
+        component: PageLinkSubmitComponent,
         pathMatch: 'full'
     },
     // If 'search-term'-parameter is not passed redirect user to
     // 'empty-search-term'-page
     {
         path: ROUTE_SEARCH_DEFAULT,
-        component: SearchComponent,
+        component: PageSearchComponent,
         pathMatch: 'full'
     },
     // Defines route to 'search links'-page with attached 'search-terms'
     // parameter
     {
         path: [ROUTE_SEARCH_DEFAULT, ROUTE_SEARCH_TERM_PARAM_KEY].join('/'),
-        component: SearchComponent,
+        component: PageSearchComponent,
+        pathMatch: 'full'
+    },
+    // Defines route to 'user login'-page
+    {
+        path: ROUTE_LOGIN_DEFAULT,
+        component: PageLoginComponent,
+        pathMatch: 'full'
+    },
+    // Defines route to user-profile with attached user-id param-key
+    // CAUTION! Make sure that if user-id parameter is not passed, user
+    // is redirected to http-404
+    {
+        path: [ROUTE_USER_DEFAULT, ROUTE_USER_ID_PARAM_KEY].join('/'),
+        component: PageUserComponent,
         pathMatch: 'full'
     },
     // Defines route to the applications http-status-404
@@ -143,7 +170,7 @@ const routes: Routes = [
  * and the routes within the application
  * to allow injection into the main
  * application-module
-*/
+ */
 @NgModule({
     imports: [
         RouterModule.forRoot(routes)

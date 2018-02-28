@@ -19,11 +19,11 @@ import {
 import { PAGINATION_LINKS_PER_PAGE } from './../../constants';
 
 @Component({
-  selector: 'hn-main',
-  templateUrl: './top.component.html',
-  styleUrls: ['./top.component.css']
+  selector: 'hn-page-top',
+  templateUrl: './page-top.component.html',
+  styleUrls: ['./page-top.component.css']
 })
-export class TopComponent implements OnInit, OnDestroy {
+export class PageTopComponent implements OnInit, OnDestroy {
 
   allLinks: Link[] = [];
   loading: boolean = true;

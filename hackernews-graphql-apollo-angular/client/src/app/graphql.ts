@@ -288,3 +288,26 @@ export interface CreateCommentMutationResponse {
     link: Link;
   };
 }
+
+export const CREATE_COMMENT_VOTE_MUTATION = gql`
+  mutation CreateCommentVoteMutation($userId: ID!, $commentId: ID) {
+    updateComment(
+      id: $linkId,
+    ){
+    	id
+  	}
+  	createComment(
+      userId: $userId,
+      commentId: $commentId
+    ) {
+      id
+    }
+  }
+`;
+
+export interface CreateCommentVoteMutationResponse {
+  loading: boolean;
+  createCommentVote: {
+    id
+  };
+}

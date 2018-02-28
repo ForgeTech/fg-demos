@@ -7,11 +7,11 @@ import { Link } from './../../types';
 import { ALL_LINKS_QUERY, AllLinksQueryResponse } from './../../graphql';
 
 @Component({
-  selector: 'hn-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  selector: 'hn-page-search',
+  templateUrl: './page-search.component.html',
+  styleUrls: ['./page-search.component.css']
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class PageSearchComponent implements OnInit, OnDestroy {
   allLinks: Link[] = [];
   loading: boolean = false;
   searchText: string = '';
@@ -21,7 +21,9 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  constructor(private apollo: Apollo, private authService: AuthService) {
+  constructor(
+    private apollo: Apollo,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -34,7 +36,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   executeSearch() {
     this.allLinks = [];
-    if (!this.searchText) {
+    if(!this.searchText) {
       return;
     }
     this.loading = true;

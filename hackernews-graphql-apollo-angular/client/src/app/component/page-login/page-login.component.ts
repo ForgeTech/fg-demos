@@ -15,11 +15,11 @@ import {
 } from './../../graphql';
 
 @Component({
-  selector: 'hn-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'hn-page-login',
+  templateUrl: './page-login.component.html',
+  styleUrls: ['./page-login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class PageLoginComponent implements OnInit {
   login: boolean = true; // switch between Login and SignUp
   email: string = '';
   password: string = '';
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         const id = result.data.authenticateUser.id;
         const token = result.data.authenticateUser.token;
         const name = result.data.authenticateUser.name;
-        this.saveUserData(id, token, name);
+        this.authService.saveUserData(id, token, name);
         this.router.navigate(['/']);
       }, (error) => {
         alert(error);
@@ -66,19 +66,12 @@ export class LoginComponent implements OnInit {
         const id = result.data.authenticateUser.id;
         const token = result.data.authenticateUser.token;
         const name = result.data.authenticateUser.name;
-        this.saveUserData(id, token, name);
+        this.authService.saveUserData(id, token, name);
         this.router.navigate(['/']);
 
       }, (error) => {
         alert(error);
       });
     }
-  }
-
-  saveUserData(id: string, token: string, name: string) {
-    localStorage.setItem(AUTH_USER_ID, id);
-    localStorage.setItem(AUTH_USER_TOKEN, token);
-    localStorage.setItem(AUTH_USER_NAME, name);
-    this.authService.setUserId(id, name);
   }
 }

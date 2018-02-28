@@ -1,21 +1,23 @@
 <!-- Currently not used, as inline-template was used to allow compiling constants
 into template without having them to be injected into the component-class -->
-<div class="flex pa1 justify-between nowrap orange">
+<header class="flex pa1 justify-between nowrap orange">
   <div class="flex flex-fixed black">
-    <a [routerLink]="['/links']" class="fw7 mr1 no-underline black">Hacker News</a>
-    <a [routerLink]="['/new']" class='ml1 no-underline black'>new</a>
+    <a [routerLink]="['/${ROUTE_LINKS_DEFAULT}']" class="fw7 mr1 no-underline black">Hacker News</a>
+    <a [routerLink]="['/${ROUTE_LINKS_NEW}']" class='ml1 no-underline black'>new</a>
     <div class="ml1">|</div>
-    <a [routerLink]="['/top']" class='ml1 no-underline black'>top</a>
+    <a [routerLink]="['/${ROUTE_LINKS_TOP}']" class='ml1 no-underline black'>voted</a>
     <div class="ml1">|</div>
-    <a [routerLink]="['/search']" class='ml1 no-underline black'>search</a>
+    <a [routerLink]="['/${ROUTE_COMMENTS_DEFAULT}']" class='ml1 no-underline black'>comments</a>
+    <div class="ml1">|</div>
+    <a [routerLink]="['/${ROUTE_SEARCH_DEFAULT}']" class='ml1 no-underline black'>search</a>
     <div class="flex" *ngIf="logged">
       <div class="ml1">|</div>
-      <a [routerLink]="['/create']" class='ml1 no-underline black'>submit</a>
+      <a [routerLink]="['/${ROUTE_SUBMIT_DEFAULT}']" class='ml1 no-underline black'>submit</a>
     </div>
   </div>
   <div class="flex flex-fixed">
-    <div *ngIf="logged" class="ml1 pointer black" >{{userName}}</div>
+    <a *ngIf="logged" [routerLink]="['/${ROUTE_USER_DEFAULT}', userId]" class="ml1 pointer no-underline black">{{userName}}</a>
     <div *ngIf="logged" class="ml1 pointer black" (click)="logout()">(logout)</div>
-    <a *ngIf="!logged" [routerLink]="['/login']" class='ml1 no-underline black'>login</a>
+    <a *ngIf="!logged" [routerLink]="['/${ROUTE_LOGIN_DEFAULT}']" class='ml1 no-underline black'>login</a>
   </div>
-</div>
+</header>

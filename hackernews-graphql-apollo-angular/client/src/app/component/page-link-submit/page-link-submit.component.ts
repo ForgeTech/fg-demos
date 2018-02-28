@@ -11,11 +11,11 @@ import {
 } from '../../graphql';
 
 @Component({
-  selector: 'hn-create-link',
-  templateUrl: './create-link.component.html',
-  styleUrls: ['./create-link.component.css'],
+  selector: 'hn-page-link-submit',
+  templateUrl: './page-link-submit.component.html',
+  styleUrls: ['./page-link-submit.component.css'],
 })
-export class CreateLinkComponent implements OnInit {
+export class PageLinkSubmitComponent implements OnInit {
   description: String = '';
   url: String = '';
   apollo: Apollo;

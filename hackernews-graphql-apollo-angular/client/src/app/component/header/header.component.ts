@@ -38,9 +38,9 @@ import {
           </div>
         </div>
       <div class="flex flex-fixed">
-        <div *ngIf="logged" [routerLink]="[${ROUTE_USER_DEFAULT}]" class="ml1 pointer black">{{userName}}</div>
+        <a *ngIf="logged" [routerLink]="['${ROUTE_USER_DEFAULT}', userId]" class="ml1 pointer no-underline black">{{userName}}</a>
         <div *ngIf="logged" class="ml1 pointer black" (click)="logout()">(logout)</div>
-        <a *ngIf="!logged" [routerLink]="[${ROUTE_LOGIN_DEFAULT}]" class='ml1 no-underline black'>login</a>
+        <a *ngIf="!logged" [routerLink]="['${ROUTE_LOGIN_DEFAULT}']" class='ml1 no-underline black'>login</a>
       </div>
     </header>
   `,
@@ -50,6 +50,7 @@ import {
 export class HeaderComponent implements OnInit {
   logged: boolean = false;
   userName: string = '';
+  userId: string = '';
 
   constructor(private authService: AuthService) {
   }
@@ -60,8 +61,8 @@ export class HeaderComponent implements OnInit {
       .subscribe(isAuthenticated => {
         this.logged = isAuthenticated;
         this.userName = this.authService.userName;
+        this.userId = this.authService.userId;
       });
-
   }
 
   logout() {
