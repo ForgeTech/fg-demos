@@ -16,7 +16,10 @@ import {
   NEW_LINKS_SUBSCRIPTION,
   NEW_VOTES_SUBSCRIPTION
 } from './../../graphql';
-import { PAGINATION_LINKS_PER_PAGE } from './../../constants';
+import {
+  PAGINATION_LINKS_PER_PAGE,
+  PAGINATION_PARAM_KEY
+} from './../../constants';
 
 @Component({
   selector: 'hn-page-main',
@@ -96,16 +99,6 @@ export class PageMainComponent implements OnInit, OnDestroy {
         updateQuery: (previous, { subscriptionData }) => {
           console.log('NEW_LINKS_SUBSCRIPTION');
           console.log(subscriptionData);
-          // TODO: Finde out if Bug and file if so:
-          /*
-          * const newAllLinks = [
-          *  ...(previous as any).allLinks // missing ',' doesn't throw compile time error
-          * but fails at run-time
-          *  (subscriptionData as any).data.Link.node
-          * ];
-          */
-          // console.log('EXECUTES!');
-          // console.log(subscriptionData);
           const newAllLinks = [
             (subscriptionData as any).data.Link.node,
             ...(previous as any).allLinks

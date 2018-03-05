@@ -1,16 +1,20 @@
-<h4 *ngIf="loading">Loading...</h4>
-<div>
-    <button [disabled]="(firstPage | async)?true:null" (click)="previousPage()">Previous</button>
-    <button [disabled]="!(morePages | async)?true:null" (click)="nextPage()">Next</button>
-</div>
-<hn-link-item *ngFor="let link of linksToRender; let index=index" 
+<div class="link-item-list--sticky-footer--wrapper">
+    <h4 *ngIf="loading" class="center">Loading...</h4>
+    <div class="link-item-list--pagination">
+        <button [disabled]="(firstPage | async)?true:null" (click)="previousPage()">Previous</button>
+        <button [disabled]="!(morePages | async)?true:null" (click)="nextPage()">Next</button>
+    </div>
+    <hn-link-item *ngFor="let link of linksToRender; let index=index" 
     [link]="link" 
     [index]="pagedIndex(index)" 
     [isAuthenticated]="isAuthenticated"
     (linkUpvoteEvent)="voteForLink($event.link)"
-    >
-</hn-link-item>
-<div>
-    <button [disabled]="(firstPage | async)?true:null" (click)="previousPage()">Previous</button>
-    <button [disabled]="!(morePages | async)?true:null" (click)="nextPage()">Next</button>
+    ></hn-link-item>
+    <div class="link-item-list--sticky-footer--position"></div>    
+</div>
+<div class="link-item-list--sticky-footer--footer">
+    <div class="link-item-list--pagination">
+        <button [disabled]="(firstPage | async)?true:null" (click)="previousPage()">Previous</button>
+        <button [disabled]="!(morePages | async)?true:null" (click)="nextPage()">Next</button>
+    </div>
 </div>

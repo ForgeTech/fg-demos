@@ -1,6 +1,6 @@
 <!-- Currently not used, as inline-template was used to allow compiling constants
 into template without having them to be injected into the component-class -->
-<header class="flex pa1 justify-between nowrap orange">
+<div class="flex pa1 justify-between nowrap orange">
   <div class="flex flex-fixed black">
     <a [routerLink]="['/${ROUTE_LINKS_DEFAULT}']" class="fw7 mr1 no-underline black">Hacker News</a>
     <a [routerLink]="['/${ROUTE_LINKS_NEW}']" class='ml1 no-underline black'>new</a>
@@ -20,4 +20,4 @@ into template without having them to be injected into the component-class -->
     <div *ngIf="logged" class="ml1 pointer black" (click)="logout()">(logout)</div>
     <a *ngIf="!logged" [routerLink]="['/${ROUTE_LOGIN_DEFAULT}']" class='ml1 no-underline black'>login</a>
   </div>
-</header>
+</div>

@@ -1,12 +1,16 @@
-<div class="page-wrapper background-gray">
+<div class="page--wrapper background-gray">
     <div class="sticky-footer--wrapper w100">
-        <hn-header></hn-header>
-        <div class='ph3 pv1'>
+        <header class="page--header">
+            <hn-header></hn-header>
+        </header>
+        <div class='page--content ph3 pv1'>
             <router-outlet></router-outlet>
         </div>
         <div class="sticky-footer--position"></div>
     </div>
     <div class="sticky-footer--footer">
-        <hn-footer></hn-footer>
+        <footer class="page--footer">
+            <hn-footer></hn-footer>
+        </footer>
     </div>
 </div>
