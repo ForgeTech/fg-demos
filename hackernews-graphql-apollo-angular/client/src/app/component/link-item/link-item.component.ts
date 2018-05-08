@@ -21,7 +21,7 @@ import {
         | by {{link.postedBy ? link.postedBy.name : 'Unknown'}}
         | {{humanizeDate(link.createdAt)}}
         <a [routerLink]="['/${ROUTE_LINK_DEFAULT}', link.id]" class="no-underline gray">
-        | Comments({{link.commentCount}})
+        | Comments({{link.comments.length}})
         </a>
       </div>
     </div>

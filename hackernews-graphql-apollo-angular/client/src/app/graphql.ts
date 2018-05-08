@@ -38,6 +38,9 @@ export const ALL_LINKS_QUERY = gql`
         }
       }
       commentCount
+      comments {
+        id
+      }
       postedBy {
         id
         name
@@ -311,3 +314,35 @@ export interface CreateCommentVoteMutationResponse {
     id
   };
 }
+
+// export const GET_LINK_AND_ALL_RESPONSES = gql`
+//   query AllLinksQuery (
+//     $id: String!
+//   ) {
+//   Link (
+//     id: $id
+//   ){
+//     description
+//     comments {
+//       message
+//       user {
+//         id
+//         name
+//       }
+//       responses {
+//         message
+//         user {
+//           id
+//           name
+//         }
+//         responses {
+//           message
+//           user {
+//             id
+//             name
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
