@@ -3,6 +3,7 @@ Repository for collecting various demo-applications re/created by ForgeTech
 
 ## Collection of things to investigate
 
+* ANGULAR/ANALYTICS: https://github.com/angulartics/angulartics2
 * JAVASCRIPT SEO: https://prerender.io/pricing
 * COMPANY/SIDEHUSTLE: http://justinmares.com/the-4-kinds-of-side-businesses-you-can-start/
 * COMPANY: https://www.palantir.com/getting-hired/
