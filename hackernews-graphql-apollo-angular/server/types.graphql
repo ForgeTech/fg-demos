@@ -1,4 +1,4 @@
-# ---------------------------------------------------------------------
+#######################################################################
 # types.graphql - 
 # This file defines all graphql-schemas of the forge-hackernews
 # applications graphcool graphql backend-service
@@ -8,9 +8,9 @@
 # their properties are found in 'types.ts'-file in 
 # 'client/src/app/'-directory, so they are available in the
 # applications documentation
-# ---------------------------------------------------------------------
+#######################################################################
 
-# ----------------------- Example (Start) -----------------------------
+# ####################### Example (Start) #############################
 # The following types define the data model of the example service
 # based on which the GraphQL API is generated
 
@@ -33,10 +33,10 @@
 #   # Every relation also required a back-relation (to determine 1:1, 1:n or n:m)
 #   author: User! @relation(name: "UserPosts")
 # }
-# -----------------------Example (End) -----------------------------
+# ####################### Example (Start) ###############################
 
 type Link @model {
-  # Required system field:
+  # Required system field
   id: ID! @isUnique # read-only (managed by Graphcool)
   # Optional system fields (remove if not needed):
   createdAt: DateTime! # read-only (managed by Graphcool)
@@ -58,7 +58,7 @@ type Link @model {
 
 # added by email-password template: (please uncomment)
 type User @model {
-  # Required system field:
+  # Required system field
   id: ID! @isUnique # read-only (managed by Graphcool)
   # Optional system fields (remove if not needed):
   createdAt: DateTime! # read-only (managed by Graphcool)
@@ -75,7 +75,7 @@ type User @model {
 }
 
 type Vote @model {
-  # Required system field:
+  # Required system field
   id: ID! @isUnique # read-only (managed by Graphcool)
   # Optional system fields (remove if not needed):
   createdAt: DateTime! # read-only (managed by Graphcool)
@@ -86,7 +86,7 @@ type Vote @model {
 }
 
 type Comment @model {
-  # Required system field:
+  # Required system field
   id: ID! @isUnique # read-only (managed by Graphcool)
   # Optional system fields (remove if not needed):
   createdAt: DateTime! # read-only (managed by Graphcool)
@@ -106,7 +106,7 @@ type Comment @model {
 }
 
 type CommentVote @model {
-  # Required system field:
+  # Required system field
   id: ID! @isUnique # read-only (managed by Graphcool)
   # Optional system fields (remove if not needed):
   createdAt: DateTime! # read-only (managed by Graphcool)
@@ -115,3 +115,135 @@ type CommentVote @model {
   user: User! @relation(name: "UsersCommentVotes")
   comment: Comment! @relation(name: "VoteOnComment")
 }
+
+##################################################################################
+# The following types are meant for Prototyping of the for now named 
+# FORGE -DESIGN, DEVELOPMENT AND PROTOYPING TOOLS
+##################################################################################
+
+# Type to represent all possible kinds of content that can be used
+# within the application
+type Content @model {
+  # Required system field
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+  ################################################################################
+  # A human readable shorthand to easier identify
+  name: String
+  # Should contain all content-types that can be
+  # character encoded, like text, json, html...
+  payload: String
+  imageRef: String # Should later be of type image
+  audioRef: String # Should later be of type audio
+  videoRef: String # Should later be of type video
+  # Should contain the top-level type of content
+  # like text, json, html, image, audio, video...
+  type: String
+}
+
+# A Component is a partial user-interface element, typically
+# made up from layouts, layers and other components, providing
+# some sort of reuseable functionality to the application,
+# for example a text-field for presenting, altering and editing
+# of text
+type Component @model {
+  # Required system field
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+  # Member non-system fields
+  name: String!
+}
+
+# A Position is used as placeholder while structuring
+# the available screen-space - like dividing a view 
+# into header-, content- and footer-area - and later
+# hold the component making-up the user-interface
+type Position @model {
+  # Required system field
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+}
+
+# A Layout is used to organize the x-/y-axis of a view,
+# and structure it by defining positions for holding
+# user-interface elements
+type Layout @model {
+  # Required system field
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+  # Member non-system fields
+  
+}
+
+# A Layer is to stack multiple
+# layouts, and organize the depth 
+# or z-axis of the user-interface
+type Layer @model {
+  # Required system field
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+  # Member non-system fields
+}
+
+# A State should be used to adapt and modify a user-interface
+# when matching certain conditions - for example user-interactions 
+# or changes to width/height of the browser window
+type State @model {
+  # Required system field
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+  # Member non-system fields
+  
+}
+
+# A View should bundle a set of user-interface elements
+# to allow a user to perform a designated task - like
+# reading the desired information or calculating the
+# sum of two values ...
+type View @model {
+  # Required system field
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+  # Member non-system fields
+  
+}
+
+# An Export defines a set of instructions and requirements
+# used to prepare the modeled views of a project for there
+# runtime
+type Exports @model {
+  # Required system field
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+  # Member non-system fields
+  
+}
+
+type Project @model {
+  # Required system field
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  # Optional system fields (remove if not needed):
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+  # Member non-system fields
+  
+}
+
+
+
