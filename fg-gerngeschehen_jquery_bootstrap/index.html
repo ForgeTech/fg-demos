@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8" />
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame 
+		Remove this if you use the .htaccess -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<title>gerngeschehen.at</title>
+	<meta name="description" content="" />
+	<meta name="author" content="Florian Neumann (Di.Neumann.Florian@gmail.com)" />
+
+	<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+	<!-- Import Twitter Bootstrap http://twitter.github.com/bootstrap/-->
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+	<!-- Place css-modifications and overwrites for gerngeschehen.at in this file  	-->
+	<link rel="stylesheet" href="css/ggStyles.css" type="text/css"/>
+
+	<!-- ToDo Apple touch icon-->
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+</head>
+
+<body id="gg">
+
+    <div id="mainNavigation" class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <div class="nav-collapse">
+		    <!--Before Login -->
+		    <ul class="nav unstyled">
+              <li><img class="logo" src="img/gg-icon-white.png"></li>
+                <li>
+                    <a class="loginLink" href="#loginModal" data-toggle="modal" data-original-title="Verwenden sie diese Schaltfl&auml;che um sich auf gerngeschehen.at anzumelden!">
+                        Anmelden
+                    </a>
+              </li>
+                <li>
+                    <a  class="createAccountLink" data-toggle="modal" href="#createAccountModal" data-original-title="Verwenden sie diese Schaltfl&auml;che um ein Benutzerkonto auf gerngeschehen.at anzulegen.">
+                        Benutzerkonto erstellen
+                    </a>
+                </li>
+                <li data-original-title="Verwenden sie diese Schaltfl&auml;che um sich mit ihrem facebook-Konto auf gerngeschehen.at anzumelden.">
+                    <a href="#facebookLoginModal" class="facebookLoginLink facebook" data-toggle="modal">
+                        &Uuml;ber facebook.com auf gerngeschehen.at anmelden
+                    </a>
+                </li>
+            </ul>
+          	<!--After Login
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#news">Profil</a></li>
+              <li><a href="#news">Neuigkeiten</a></li>
+            </ul>-->
+			<form id="mainSearch" class="form-inline form-search">
+	          <ul class="nav pull-right unstyled">
+	          		<li id="mainSearchListItem">
+                        <label for="mainSearchText"></label>
+	          			<input id="mainSearchText" name="enterSearchText" class="input-medium search-query clearable" type="text" data-provide="typeahead" placeholder="Nach Begriff/Tag suchen..."/>
+	          		</li>
+	          		<li>
+	          			<button class="btn" id="mainSearchSubmit" name="mainSearchSubmit" data-original-title="Verwenden sie diese Schaltfl&auml;che um eine Suche abzusenden." type="submit">Suchen&nbsp;<i class="icon-search"></i></button>
+	          		</li>
+	          </ul>
+	        </form>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar-inner -->
+        <div class="messagebar">
+            <div class="container">
+                    <div class="content">
+                        <div class="message-content">
+                        </div><!--.message -->
+                            <div class="message-info pull-right">
+                                <div class="message-date">
+                                    22.03.1983  <!--ToDo: Date/Time when msg was sent -->
+                                </div><!-- .message-date -->
+                                <a class="message-remove"><i class="icon-remove icon-white"></i></a>
+                                <div class="message-info-content">
+                                    <!--ToDo: Brainstorm Content: like user who sent mail etc. -->
+                                </div><!-- .message-info-content -->
+                            </div><!-- .message-info -->
+                    </div> <!--.content -->
+                    <div class="message-navigation pull-right">
+                        <div class="message-count">
+                            4
+                        </div> <!-- .message-count -->
+                         <div class="message-previous">
+                             <a class="previous"><i class="icon-arrow-left icon-white"></i></a>
+                         </div><!-- .message-next -->
+                        <div class="message-next">
+                            <a class="next"><i class="icon-arrow-right icon-white"></i></a>
+                        </div><!-- .message-previous -->
+                    </div><!--message-navigation-->
+            </div><!--.message -->
+        </div><!--/.messagebar -->
+    </div><!--/.navbar .navbar-fixed-top-->
+	
+	<div id="headContent" class="row">
+		<div class="container">
+			<a href="home.html">
+				<img class="logo" src="img/logo.png" alt="gerngeschehen.at Logo" />
+			</a>
+
+			<!--<form id="enterAd">
+				<input id="enterAdText" name="enterAdText" type="text" placeholder="Geben sie hier den Text ihrer Anzeige ein..."/>
+				<div >
+					<label data-original-title="Erstellen sie eine Anzeige der Kategorie 'Suche'" for="enterAdSearch"><input  type="radio" id="enterAdSearch" name="enterAdCategory"/>Suche</label>
+					<label data-original-title="Erstellen sie eine Anzeige der Kategorie 'Biete'" for="enterAdOffer"><input type="radio" id="enterAdOffer" name="enterAdCategory"/>Biete</label>
+					<label data-original-title="Erstellen sie eine Anzeige der Kategorie 'Tipp'" for="enterAdTip"><input type="radio" id="enterAdTip" name="enterAdCategory"/>Tipp</label>
+					<button data-original-title="Speichern und ver&ouml;ffentlichen sie ihre Anzeige"  id="enterAdSubmit" class="btn" name="enterAdSubmit">Speichern <i class="icon-file"></i></button>
+				</div>
+			</form>   -->
+		</div>
+	</div><!--/#headcontent-->
+	
+	<div id="mainContent" class="container">
+			<div id="sidebarLeft">
+				<form id="filters">
+					<h4>Filtere nach:</h4>
+					<ul id="custom" class="filters unstyled">
+						<li data-original-title="Filtert nach allen eigenen Anzeigen"><label for="mine"><input name="Meinen Beitr&auml;gen" id="mine" type="checkbox" count="0" value="mine"/><i class="icon-user"></i>Meinen Beitr&auml;gen</label></li>
+						<li data-original-title="Filtert nach allen Anzeigen von Freunden"><label for="friends"><input name="Freunden" id="friends" type="checkbox" count="0" value="friends"/><i class="icon-heart"></i>Freunden</label></li>
+						<li data-original-title="Filtert nach allen Anzeigen von Bekannten"><label for="known"><input name="Bekannten" id="known" type="checkbox" count="0" value="known"/><i class="icon-star"></i>Bekannten</label></li>
+						<li data-original-title="Filtert nach allen Anzeigen aus meiner Region"><label for="region"><input name="Meiner Region" id="region" type="checkbox" count="0" value="region" /><i class="icon-home"></i>Meiner Region</label></li>
+					</ul>
+					<h4>Filtere nach Typ:</h4>
+					<ul id="type" class="filters unstyled">
+						<li data-original-title="Filtert nach allen Anzeigen der Kategorie 'Suche'"><label for="search"><input name="Suche" id="search" type="checkbox" count="0" value="search" /><i class="ggicon-search"></i>Suche</label></li>
+						<li data-original-title="Filtert nach allen Anzeigen der Kategorie 'Biete'"><label for="offer"><input name="Biete" id="offer" type="checkbox" count="0" value="offer" /><i class="ggicon-offer"></i>Biete</label></li>
+						<li data-original-title="Filtert nach allen Anzeigen der Kategorie 'Tipp'"><label for="tip"><input name="Tipp" id="tip" type="checkbox" count="0" value="tip" /><i class="ggicon-tipp"></i>Tipp</label></li>
+					</ul>
+					<h4>Filtere nach Tags:</h4>
+                    <h5>Tags suchen:</h5>
+                    <label id="tagSearchTextLabel"  data-original-title="Geben sie hier einen Suchbegriff ein um neue Begriffe zum filtern zu entdecken" for="tagSearchText">
+                        <input id="tagSearchText" class="clearable" name="tagSearchText" type="text" data-provide="typeahead" placeholder="Nach Tag suchen...">
+                    </label>
+                    <!--<div id="slider_target"  data-original-title="Mittels des Schiebereglers lassen sich die angezeigten Begriffe nach ihrer H&auml;figkeit filtern"></div>
+                    <label for="tagSearchMinCount"><input id="tagSearchMinCount" type="text" class="span1" name="tagSearchMinCount" size="3" value="0" onchange="changeMinCountOfTagCloudElement()"></label>
+					-->
+					<h5>Tags ausw&auml;hlen:</h5>
+					<!--ToDo: Write php-function rendering the result of a tagSearch, or
+						random set of tags (about 15), into tagCloud-->
+					<div id="tagCloud" data-original-title="Hier koennen sie zus&auml;zliche Begriffe zum filtern suchen und ausw&auml;hlen.">
+						<!-- Example to show the output of the the php-script. If Javascript
+							is turned of this can be used to select tag-filters, otherwise the
+							the list will be hidden and its values are transformed into an js-array
+							which is feed to the tagCloud-Script. DON'T OVERLOOK additional attribute count!
+							 -->
+						<ul id="tags" class="filters unstyled">
+							<li><label for="alex"><input name="alex" id="alex" type="checkbox" value="alex" count="200"/>Alex</label></li>
+							<li><label for="carina"><input name="carina" id="carina" type="checkbox" value="carina" count="345"/></i>Carina</label></li>
+							<li><label for="nives"><input name="nives" id="nives" type="checkbox" value="nives" count="67"/></i>Nives</label></li>
+							<li><label for="florian"><input name="florian" id="florian" type="checkbox" value="florian" count="120"/></i>Florian</label></li>
+						</ul>
+					</div>
+					<button data-original-title="Verwenden sie diese Schaltfl&auml;che um ihre Filter-Optionen anzuwenden." class="btn" type="submit">Filtern&nbsp;<i class="icon-refresh"></i></button>
+				</form>
+			</div>
+			<div id="centerContent">
+                <ul id="adds" class="unstyled">
+                <!--template content-entrie (Start)-->
+                    <li class="ad-gg span3">
+                        <div class="ad-head">
+                            <a class="close" data-dismiss="modal">×</a>
+                            <h2>Willkommen auf gerngeschehen.at</h2>
+                        </div>
+                        <div class="ad-body">
+                            <img class="gg-freecard" src="img/gg-freecard.jpg">
+                            <h3>Frag einfach deine Freunde!</h3>
+                            Sich gegenseitig helfen - ohne professionelle Anbieter engagieren zu müssen.
+                            Wieso nicht von den Kompetenzen im eigenen und erweiterten Netzwerk profitieren? Frag einfach deine Freunde - sie helfen dir bestimmt oder empfehlen dir jemanden, der dir weiterhelfen kann.
+                            Lass es ruhig auf einen Versuch ankommen. Registrier' dich gleich direkt hier oder verwende einfach deinen Facebook-Login um das Angebot unserer Seite kennenzulernen!
+                            <div class="ad-footer">
+                             <b>Dein gerngeschehen.at-Team</b>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="ad-gg span3">
+                        <div class="ad-head">
+                            <a class="close" data-dismiss="modal">×</a>
+                            <img class=profile-user src="img/uploads/user_small.png" />
+                            <h3>Biete:</h3>
+                        </div>
+                        <div class="ad-body">
+                            <h4>Einen netten kleinen Flo...</h4>
+                            <div class="content">rian fuer alle lebenslagen, stubenrein, verspielt,
+                                vertraegt sich allerdings nicht mit kindern und ist zaenkisch mit
+                                gleichgearteten....
+                            </div>
+                            <div class="ad-footer">
+                                <i class="icon-bookmark"></i>
+                                <i class="icon-info-sign"></i>
+                                <i class="icon-camera"></i>
+                                <i class="icon-lock"></i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="ad-gg span3">
+                        <div class="ad-head">
+                            <a class="close" data-dismiss="modal">×</a>
+                            <img class=profile-user src="img/uploads/user_small.png" />
+                            <h3>Biete:</h3>
+                        </div>
+                        <div class="ad-body">
+                            <h4>Einen netten kleinen Flo...</h4>
+                            <div class="content">rian fuer alle lebenslagen, stubenrein, verspielt,
+                                vertraegt sich allerdings nicht mit kindern und ist zaenkisch mit
+                                gleichgearteten....
+                            </div>
+                            <div class="ad-footer">
+                                <i class="icon-bookmark"></i>
+                                <i class="icon-info-sign"></i>
+                                <i class="icon-camera"></i>
+                                <i class="icon-lock"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <!--template content-entrie (End)
+
+			</div> <!--centerContent-->
+			<!--<div id="sidebarRight">
+				<a style="padding-left: 45px;" href="#" target="_blank"><img src="img/ads/freecard_banner.jpg" class="add"/></a>
+			</div> -->
+        </div> <!--#centerContent-->
+	</div><!--/#mainContent-->
+	
+     <div id="footer" class="bottom-bar">
+     	<div class="bottombar-inner">
+	        <div class="container">
+	          <ul class="nav unstyled">
+	            <li>
+	            	<a href="#">&copy; 2011 gerngeschehen.at</a>
+	            </li>
+	            <li>
+					<a href="impressum.html">Impressum</a>
+				</li>
+				<li>
+					<a href="agb.html">AGBs</a>
+				</li>
+				<li>
+					<a href="about.html?tabId=ueberUns">&Uuml;ber uns</a>
+				</li>
+				<li>
+					<a href="contact.html">Kontakt</a>
+				</li>
+	          </ul>
+	        </div><!--/.container -->
+	    </div><!--/.bottombar-inner-->
+  	</div><!--/#footer-->
+
+    <!--Login Modal (Start) -->
+    <div id="loginModal" class="modal hide fade">
+        <form id="loginForm" class="form-horizontal">
+            <div class="modal-header">
+                <img class="icon" src="img/gg-icon-white.png">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>Auf gerngeschehen.at anmelden: </h3>
+            </div>
+            <div class="modal-body">
+                <img class="logo" src="img/logo-wide-small.png" alt="logo gerngeschehen.at" />
+                <div class="control-group">
+                    <label class="control-label" for="emailLoginForm">eMail<b class="reqInput">*</b>:</label>
+                    <div class="controls">
+                        <div style="position: relative;">
+                            <input id="emailLoginForm" name="email" class="input-large clearable" type="text" placeholder="Gib deine eMail-Adresse ein...">
+                        </div>
+                        <p class="help-block">Gib die eMail-Adresse deines Benutzerkontos ein.</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="passwordLoginForm">Password<b class="reqInput">*</b>:</label>
+                    <div class="controls">
+                        <input id="passwordLoginForm" name="password" class="input-large clearable" type="password" placeholder="Gib dein Passwort ein...">
+                        <p class="help-block">Gib das Passwort deines Benutzerkontos ein.<br/>
+                            (<a class="forgotPasswordLink" href="#forgotPasswordModal" data-toggle="modal" data-to data-dismiss="modal">Passwort vergessen?</a><br/>
+                            <a class="createAccountLink" href="#createAccountModal" data-toggle="modal" data-dismiss="modal">Noch kein gerngeschehen.at Benutzerkonto?</a>)
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="rememberMeLoginForm">Angemeldet bleiben:</label>
+                    <div class="controls">
+                        <p class="help-block">
+                        <label class="checkbox">
+                            <input id="rememberMeLoginForm" name="remember" class="checkbox" type="checkbox" value="accepted">
+                        </label>
+                    </div>
+                </div>
+                <div>Felder mit <b class="reqInput">*</b> sind Pflichtfelder</div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" type="submit">Anmelden</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--Login Modal (End)-->
+
+    <!--Facebook-Login Modal (Start) -->
+    <div id="facebookLoginModal" class="modal hide fade">
+        <form id="facebookLoginForm" class="form-horizontal">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>Mittels facebook.com auf gerngeschehen.at anmelden</h3>
+            </div>
+            <div class="modal-body">
+                <img class="logo" src="img/logo-wide-small.png" alt="logo gerngeschehen.at" />
+                <div class="help-block">
+                    Um mittels facebook.com ein gerngeschehen.at Benutzerkonto zu erstellen, m&uuml;ssen
+                    sie die Allgemeinen Gesch&auml;ftsbedingungen von gerngeschehen.at akzeptieren.
+                    Nach erfolgreicher Erstellung ihres Benutzerkontos erhalten sie eine eMail mit
+                    ihrem pers&ouml;nlichen gerngeschehen.atPasswort. Mit diesem k&ouml;nnen sie sich
+                    auch unabh&auml;ngig von facebook auf gerngeschehen.at anmelden.
+                </div><br/>
+                <div class="control-group">
+                    <label class="control-label" for="agbsFacebookLoginForm">AGBs<b class="reqInput">*</b>:</label>
+                    <div class="controls">
+                        <p class="help-block">
+                            <label class="checkbox">
+                                <input id="agbsFacebookLoginForm" name="agbs" type="checkbox" value="accepted">
+                            </label>
+                            Die <a href="">AGBs</a> von gerngeschehen.at akzeptieren</p>
+                    </div>
+                </div>
+                <div>Felder mit <b class="reqInput">*</b> sind Pflichtfelder</div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Mittels facebook.com auf gerngeschehen.at anmelden</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--facebook-Login Modal (End)-->
+
+    <!--Create-Account Modal (Start) -->
+    <div id="createAccountModal" class="modal hide fade">
+        <form id="createAccountForm" class="form-horizontal">
+            <div class="modal-header">
+                <img class="icon" src="img/gg-icon-white.png">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>Benutzerkonto auf gerngeschehen.at erstellen</h3>
+            </div>
+            <div class="modal-body">
+                <img class="logo" src="img/logo-wide-small.png" alt="logo gerngeschehen.at" />
+                <div class="control-group">
+                    <label class="control-label" for="firstnameCreateAccountForm">Vorname<b class="reqInput">*</b>:</label>
+                    <div class="controls">
+                        <input id="firstnameCreateAccountForm" name="firstname" class="input-large clearable" type="text" placeholder="Gib deinen Vornamen ein...">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="lastnameCreateAccountForm">Nachname<b class="reqInput">*</b>:</label>
+                    <div class="controls">
+                        <input id="lastnameCreateAccountForm" name="lastname" class="input-large clearable" type="text" placeholder="Gib deinen Nachnamen ein...">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="emailCreateAccountForm">eMail<b class="reqInput">*</b>:</label>
+                    <div class="controls">
+                        <input id="emailCreateAccountForm" name="email" class="input-large clearable required email" type="text" placeholder="Gib deine eMail-Adresse ein...">
+                        <p class="help-block">Gib die eMail-Adresse ein, die du zur Erstellung deines gerngeschehen.at Benutzerkontos verwenden m&ouml;chtest.</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="passwordCreateAccountForm">Password<b class="reqInput">*</b>:</label>
+                    <div class="controls">
+                        <input id="passwordCreateAccountForm" name="password" class="input-large clearable" type="password" placeholder="Gib dein Passwort ein...">
+                        <p class="help-block">Gib das Passwort ein das du f&uuml;r dein Benutzerkonto verwenden m&ouml;chtest.</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="passwordConfirmCreateAccountForm">Password best&auml;tigen<b class="reqInput">*</b>:</label>
+                    <div class="controls">
+                        <input id="passwordConfirmCreateAccountForm" name="passwordConfirm" class="input-large clearable" type="password" placeholder="Passwort erneut eingeben...">
+                        <p class="help-block">Gib das Passwort das du f&uuml;r dein Benutzerkonto verwenden m&ouml;chtest erneut ein um es zu best&auml;tigen.</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="agbsCreateAccountForm">AGBs<b class="reqInput">*</b>:</label>
+                    <div class="controls">
+                        <p class="help-block">
+                            <label class="checkbox">
+                                <input id="agbsCreateAccountForm" name="agbs" type="checkbox" value="accepted">
+                            </label>
+                            Die <a href="">AGBs</a> von gerngeschehen.at akzeptieren</p>
+                    </div>
+                </div>
+                <div>Felder mit <b class="reqInput">*</b> sind Pflichtfelder</div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" type="submit">Benutzerkonto erstellen</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--Create-Account Modal (End)-->
+
+    <!--Forgot Password Modal (Start)-->
+    <div id="forgotPasswordModal" class="modal hide fade">
+        <form id="forgotPasswordForm" class="form-horizontal">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>Vergessenes gerngeschehen.at Passwort zur&uuml;cksetzten</h3>
+            </div>
+            <div class="modal-body">
+                <img class="logo" src="img/logo-wide-small.png" alt="logo gerngeschehen.at" />
+                <div class="control-group">
+                    <label class="control-label" for="emailForgotPasswordForm">eMail<b class="reqInput">*</b>:</label>
+                    <div class="controls">
+                        <input id="emailForgotPasswordForm" name="email" class="input-large clearable" type="text" placeholder="Gib deine eMail-Adresse ein...">
+                        <p class="help-block">Gib die zu deinem Benutzerkonto geh&ouml;rende eMail-Adresse ein. An diese Adresse wird eine eMail mit deinem Ersatzpasswort gesendet.</p>
+                    </div>
+                </div>
+                <div>Felder mit <b class="reqInput">*</b> sind Pflichtfelder</div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" type="submit">Passwort zur&uuml;cksetzen</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--Forgot Password Modal (End)-->
+
+    <!--ADD TESTDATA (START)-->
+    <script type="text/javascript" src="js/testdata/ggMessagesJSONTestdata.js"></script>
+    <script type="text/javascript" src="js/testdata/ggFilterJSONTestdata.js"></script>
+    <script type="text/javascript" src="js/testdata/ggAdsJSONTestdata.js"></script>
+    <!--ADD TESTDATA (END)-->
+
+  	<!--Add Scripts at bottom of the page, to make page load faster -->
+        <!--Add form-slider component script -->
+        <!-- <script src="js/dhtmlgoodies_slider.js"></script>-->
+        <!--Add JQuery Lib -->
+        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <!--Add Json2 lib for handling parsing/stringify JSON-Objects Link: https://github.com/douglascrockford/JSON-js -->
+        <script type="text/javascript" src="js/json2.js"></script>
+        <!--Add JQuery validation plugin for client side form validation -->
+        <script type="text/javascript" src="js/jquery-validation-1.9.0/jquery.validate.min.js"></script>
+            <!-- Add additional validation methodes -->
+            <script type="text/javascript" src="js/jquery-validation-1.9.0/additional-methods.min.js"></script>
+            <!--TODO: Add correct localization file for validation plugin depending on the users selected language/browserlanguage-->
+                <script type="text/javascript" src="js/jquery-validation-1.9.0/localization/messages_de.js"></script>
+        <!--Add Twitter-Bootstrap Libs (based on jquery) -->
+            <script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
+            <script type="text/javascript" src="js/bootstrap-modal.js"></script>
+            <script type="text/javascript" src="js/bootstrap-tooltip-mod.js"></script>
+            <!--Not original Twitter-Bootstrap! Find fork here https://gist.github.com/1977953-->
+            <script type="text/javascript" src="js/bootstrap-typeahead-mod.js"></script>
+            <script type="text/javascript" src="js/bootstrap-transition.js"></script>
+        <!--Add TagCloud-Javascript. NOT ORIGINAL SCRIPT! (based on jquery)
+            Modified to add additional filter-attributes to created link-element-->
+            <script type="text/javascript" src="js/jquery.tagcloud-2.js"></script>
+        <!--Add gerngeschehen.at main javascript-file (based on jquery)-->
+        <script type="text/javascript" src="js/ggScript.js"></script>
+    </body>
+</html>

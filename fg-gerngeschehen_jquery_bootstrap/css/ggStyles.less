@@ -1,0 +1,629 @@
+/*Custom gerngeschehen.at styles
+ * Author:Florian Neumann (di.neumann.florian@gmail.com)
+ * */
+
+/*#####################Variable Definitions (Start) #########################*/
+@lightYellow:#FBFAE0;
+@yellow:#FFCB13;
+@black:#000000;
+@lightGrey:#F0F0F0;
+@darkGrey:#333333;
+@red:#BF0A00;
+@green:#CCC924;
+@blue:#5391FF;
+@white:#ffffff;
+@blackAlpha:rgba(0, 0, 0, 0.2);
+@blackAlphaMessagebar:rgba(0, 0, 0, 0.5);
+
+@radiusMessageContent: 5px;
+/*#####################Variable Definitions (End) #########################*/
+
+/*#####################Mixtures Definitions (Start) #########################*/
+.rounded-corners (@radius: 5px) {
+    border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+}
+/*#####################Mixtures Definitions (End) #########################*/
+
+/*#####################gerngeschehen.at Styles (Start) #########################*/
+#gg
+{
+   background-color:@lightYellow;
+
+  i.icon-remove.clearIcon{
+      position: absolute;
+      top:9px;
+      right: 5px;
+      cursor: pointer;
+  }
+  /*#####################Search Box Styles (End) #########################*/
+
+    /*##################### Form Styles(Start) #########################*/
+    input.error, select.error
+    {
+        border-color: @red;
+        border-width: 1px;
+        border-style: solid;
+        padding: 2px;
+        background-color: @lightYellow;
+    }
+    input.valid, select.valid
+    {
+        border-color: @green;
+        border-width: 1px;
+        border-style: solid;
+        padding: 2px;
+    }
+    b.reqInput
+    {
+        font-size: 20px;
+        color:@red;
+    }
+    /*##################### Form Styles(End) #########################*/
+
+    /*##################### ToolTip Styles(Start) #########################*/
+   .tooltip
+   {
+        z-index: 8888;
+
+   }
+    //Styles for red error-Tooltip
+    .tooltip.error
+    {
+        width:120px;
+        .tooltip-inner
+        {
+            background-color: @red;
+        }
+    }
+    .tooltip.error.top .tooltip-arrow {
+        bottom: 0;
+        left: 50%;
+        margin-left: -5px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid @red;
+    }
+    .tooltip.error.left .tooltip-arrow {
+        top: 50%;
+        right: 0;
+        margin-top: -5px;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 5px solid @red;
+    }
+    .tooltip.error.bottom .tooltip-arrow {
+        top: 0;
+        left: 50%;
+        margin-left: -5px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid @red;
+    }
+    .tooltip.error.right .tooltip-arrow {
+        top: 50%;
+        left: 0;
+        margin-top: -5px;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-right: 5px solid @red;
+    }
+   /*##################### ToolTip Styles(End) #########################*/
+
+    /*##################### Modal Window Styles(Start) #########################*/
+    .modal
+    {
+
+        a{color: @darkGrey;}
+        h3{color: @white;}
+        .icon{float: left; display: inline-block; margin: 5px 10px 0 0;}
+
+
+        .modal-body
+        {
+            label{
+                color: @darkGrey;
+            }
+            img.logo
+            {
+                margin:0 0 20px 0;
+            }
+        }
+
+       .modal-header
+       {
+        background-color: @yellow;
+       }
+
+       .modal-footer
+       {
+            background-color: @lightYellow;
+       }
+    }
+    /*#####################Modal Window Styles(End) #########################*/
+
+ }
+
+    /*#####################Icons(Start) #########################*/
+   [class^="ggicon-"] {
+      display: inline-block;
+      width: 16px;
+      height: 17px;
+      vertical-align: text-top;
+      background-repeat: no-repeat;
+      *margin-right: .3em;
+    }
+   
+    .ggicon-offer
+    {
+      background-position:0 1px;
+      background-image:url(../img/offer.png);
+    }
+    .ggicon-search
+    {
+      background-image:url(../img/search.png);
+    }
+    .ggicon-tipp
+    {
+      background-image:url(../img/tipp.png);
+    }
+    /*#####################Icons(End) #########################*/
+  
+  
+    /*#####################Main Navigation Area (Start) #########################*/
+      .navbar-inner
+      {
+        background-color:@yellow;
+        background-image: url(../img/header_bg.png);
+        background-repeat:repeat-x;
+        height:32px;
+        label,a,a:hover
+        {
+          color:#ffffff;
+          text-decoration:none;
+        }
+
+        .logo{
+              margin: 8px 10px 0 0;
+        }
+
+      }
+
+      .messagebar{
+          background-color:@blackAlphaMessagebar;
+          color:@white;
+          overflow-y:hidden;
+          .container{
+                div
+                {
+                    display: inline-block;
+                }
+           .content{
+                 color:@white;
+                 text-shadow: @black 3px 3px 5px;
+                 background-color:@blackAlphaMessagebar;
+                 padding:5px 2px 5px 12px;
+                 width:839px;
+                 border-bottom-right-radius: @radiusMessageContent;
+                 -webkit-border-bottom-right-radius: @radiusMessageContent;
+                 -moz-border-radius-bottomright: @radiusMessageContent;
+                 border-bottom-left-radius: @radiusMessageContent;
+                 -webkit-border-bottom-left-radius: @radiusMessageContent;
+                 -moz-border-radius-bottomleft: @radiusMessageContent;
+
+                 .message{
+                  width:727px;
+                  border-right-style:dotted;
+                  border-right-color: @white;
+                  border-right-width:1px;
+                 }
+
+                 .message-date{
+                    padding: 0 5px 5px;
+                    border-bottom-color: @white;
+                    border-bottom-style: dotted;
+                    border-bottom-width: 1px;
+                    border-right-color: @white;
+                    border-right-style: dotted;
+                    border-right-width: 1px;
+                 }
+
+                 .message-remove{
+                   cursor: pointer;
+                   padding: 0 5px 5px;
+                   border-bottom-color: @white;
+                   border-bottom-style: dotted;
+                   border-bottom-width: 1px;
+                 }
+           }
+           .message-navigation{
+               float:right;
+
+               [class^="message-"] {
+                 background-color: @blackAlphaMessagebar;
+                 height: 23px;
+                 padding-top: 5px;
+                 cursor: pointer;
+               }
+
+               .message-count
+               {
+                 .rounded-corners();
+                 width:40px;
+                 text-align: center;
+               }
+
+               .message-next
+               {
+                  border-bottom-right-radius: @radiusMessageContent;
+                  -webkit-border-bottom-right-radius: @radiusMessageContent;
+                  -moz-border-radius-bottomright: @radiusMessageContent;
+                  border-top-right-radius: @radiusMessageContent;
+                  -webkit-border-top-right-radius: @radiusMessageContent;
+                  -moz-border-radius-toprightight: @radiusMessageContent;
+                  padding-left: 3px;
+                  padding-right: 4px;
+               }
+
+               .message-previous
+               {
+                 border-top-left-radius: @radiusMessageContent;
+                 -webkit-border-top-left-radius: @radiusMessageContent;
+                 -moz-border-radius-topleft: @radiusMessageContent;
+                 border-bottom-left-radius: @radiusMessageContent;
+                 -webkit-border-bottom-left-radius: @radiusMessageContent;
+                 -moz-border-radius-bottomleft: @radiusMessageContent;
+                 margin-right: -4px;
+                 padding-left:4px;
+
+               }
+           }
+
+          }
+      }
+      
+      .navbar .nav > li a.facebook {
+          margin:5px 0 0 5px;
+          display:inline-block;
+          width:67px;
+          height:1px;
+          text-indent:-99999px;
+
+          background-image:url(../img/facebooklogin.png);
+          background-repeat:none;
+      }
+      
+      .navbar .nav > li > a {
+        color:#ffffff;
+        line-height:12px;
+        padding: 10px 10px 10px;
+      }
+      
+      .navbar .nav > li > a:hover {
+        background-color: @blackAlpha;
+      }
+      
+      #headContent{
+        padding:32px 0 0px 0px;
+        background-color:#F0F0F0;
+        border-bottom: 1px solid @white;
+        box-shadow: 0 1px #E5E5E5;
+      }
+      
+     form{
+       margin:0px;
+       padding:0px;
+       display:inline;
+       input{
+         margin:2px 0 3px 0;
+       }
+       input#mainSearchText{
+         height:12px;
+         font-size:12px;
+          margin:5px 0 0 0;
+          padding-top:5px;
+          padding-bottom:3px;
+       }
+       button{
+        margin:2px 0 0 5px;
+       }
+       button#mainSearchSubmit
+       {
+         height:22px;
+          margin-top:5px;
+          margin-bottom:3px;
+          padding-top:1px;
+          padding-bottom:1px;
+       }
+       button#loginHeaderSubmit,input[type="checkbox"]
+       {
+         margin:-1px 5px 0 5px;
+       }
+     }  
+  /*#####################Main Navigation  Area (End) #########################*/
+
+  /*#####################Header Area (Start) #########################*/
+  #headContent{
+
+      div#headerCarousel
+      {
+           margin-left: 200px;
+           height: 100px;
+           width: 750px;
+
+           div.tagPreview
+           {
+             height: 100%;
+             width:100px;
+             float:left;
+             background-color: #ff0000;
+           }
+      }
+
+      .container{
+        img,form#enterAd{
+          float:left;
+        }
+        img.logo
+        {
+           margin: 15px 4px 15px 5px;
+        }
+        form#enterAd 
+        {
+          margin-left:32px;
+          #enterAdText{
+            width:556px;
+          }
+          input[type="radio"]{
+
+          }
+          div{
+              margin-top:7px;
+              margin-left:295px;
+              input,button,label{
+              float:left;
+              margin-right:5px;
+              }
+              
+              input,label{
+                padding-top:6px;
+              }
+            }
+          }
+        }
+     }
+  /*#####################Header Area (End) #########################*/
+  
+  /*#####################Main Content Area (Start) #########################*/
+  #mainContent
+  {
+    height:100%;
+    overflow:hidden;
+    
+    /*Common mainContent-element-styles*/
+    #sidebarLeft, #sidebarRight, #centerContent
+    {
+      float:left;
+    }
+    
+    #sidebarLeft, #centerContent
+    {
+      padding: 10px 0 0 10px;
+    }
+    
+    #sidebarLeft, #sidebarRight, #centerContent
+    {
+      width:180px;
+    }
+    
+    #sidebarLeft, #sidebarRight
+    { 
+      border-right: 1px solid @lightGrey;
+      border-left: 1px solid @lightGrey;
+    }
+    
+    #sidebarRight
+    {
+    }
+    
+    #centerContent
+    {
+      width:748px;
+      padding:0px;
+      padding-top:15px;
+
+      .ad-gg, .ad-offer, .ad-search, .ad-tip
+      {
+          float: left;
+          .rounded-corners();
+          background-color:@white;
+
+          .ad-head{
+              padding: 10px;
+          }
+          .ad-body
+          {
+              padding:10px;
+              text-justify:inter-cluster;
+
+              img.gg-freecard
+              {
+                  float:right;
+              }
+
+          }
+      .ad-footer
+      {
+          padding-top: 10px;
+      }
+     }
+
+     .ad-offer, .ad-search, .ad-tip
+     {
+         h3,h4
+         {
+           display: inline-block;
+           float: left;
+         }
+     }
+
+    div.entry.offer{
+        border-left-color:@red;
+        border-top-color: @red;
+    }
+    div.entry.search{
+        border-left-color:@green;
+        border-top-color: @green;
+    }
+    div.entry.tipp
+    {
+        border-left-color:@blue;
+        border-top-color:@blue;
+    }
+    div.entry.ad
+    {
+        border-left-color:@yellow;
+        border-top-color: @yellow;
+    }
+
+  }
+    
+    /*Special sidebarLeft-styles*/
+    #sidebarLeft
+    {
+      input{
+        display:inline-block;
+      }
+
+    div#activeFilters
+    {
+         overflow: hidden;
+         div
+         {
+            display: inline-block;
+            float:left;
+            background-color: @yellow;
+            padding: 2px 5px 2px 5px;
+            margin: 1px;
+            color:@darkGrey;
+         }
+         .offer{
+           background-color: @red;
+           color: @white;
+         }
+         .search{
+            background-color: @green;
+         }
+         .tip{
+          background-color: @blue;
+         }
+         a{
+              padding: 0 0 0 5px;
+         }
+    }
+
+      label{
+        margin:0px;
+        padding:0 0 2px 0;
+        cursor: pointer;
+      }
+      
+      ul{
+        padding-top: 10px;
+        margin-left:-10px;
+        border-bottom-style:solid;
+        border-bottom-color:@lightGrey;
+        border-bottom-width:1px;
+        
+        li{
+            background-color:@white;
+            border-top-style:solid;
+            border-top-color:@lightGrey;
+            border-top-width:1px;
+            .icon-ok,.icon-remove{
+              float:right;
+              margin-top:2px;
+              padding:0 10px 0 0;
+            }
+        }
+
+        
+        li:hover{
+            text-decoration:none;
+            background-color: @lightGrey;
+            background-repeat:repeat-x;
+            background-position:-5px -10px;
+        }
+        
+        i{
+          margin:0 5px 0 15px;
+        }
+      }
+    }
+    
+    form#filterTags{
+      margin:10px 7px 0 5px;
+      input{
+        margin:0;
+      }
+      
+      button{
+        margin-left:65px;        
+      }
+    }
+    
+    #tagSearchText
+    {
+      width:160px;
+    }
+    
+    #tagCloud
+    {
+      padding:10px;
+      a{
+        color:@darkGrey;
+        text-decoration:none;
+      }
+      a:hover{
+        color:@yellow;
+        text-decoration:none;
+      }
+    }
+   
+  }
+  /*#####################Main Content Area (Start) #########################*/
+  
+  
+  /*#####################Footer(Start) #########################*/
+  #footer
+  {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-image: url(../img/footer.png);
+      
+      .nav li
+      {
+          float:left;
+      }
+      
+      a
+      {
+        color:#666667;
+        padding: 10px 15px 5px 10px;
+      }
+      
+      a:hover
+      {
+        padding: 10px 15px 5px 10px;
+        background-color: rgba(170, 170, 170, 0.2); 
+      }
+  }
+  /*#####################Footer (End) #########################*/
+
+
+
+
+/*#####################gerngeschehen.at Styles (End) #########################*/
