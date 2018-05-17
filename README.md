@@ -3,6 +3,7 @@ Repository for collecting various demo-applications re/created by ForgeTech
 
 ## Collection of things to investigate
 
+* GIT: https://github.com/isomorphic-git/isomorphic-git
 * WEBAUTH: https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API
 * ANGULAR/ANALYTICS: https://github.com/angulartics/angulartics2
 * JAVASCRIPT SEO: https://prerender.io/pricing
