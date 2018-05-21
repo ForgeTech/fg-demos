@@ -39,7 +39,9 @@ Repository for collecting various demo-applications re/created by ForgeTech
     * https://css-tricks.com/automating-css-regression-testing/
   
 ### Research
-* Functional Programming: https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript
+* [ ] GRAPHQL; https://www.prisma.io/?q=a
+* [ ] CAPTCHA: https://webdesign.tutsplus.com/tutorials/how-to-integrate-no-captcha-recaptcha-in-your-website--cms-23024
+* [ ] Functional Programming: https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript
 * [ ] CSS-GRID https://www.youtube.com/watch?v=7kVeCqQCxlk https://codepen.io/collection/DdOKgm/
 * [ ] CSS-GRID https://www.smashingmagazine.com/2017/11/css-grid-supporting-browsers-without-grid/
 * [ ] CSS-GRID https://medium.com/podible-engineering/pixels-are-tech-debt-ff4ff4fdeb4c
