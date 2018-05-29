@@ -1,21 +1,8 @@
 # fg-demos
 Repository for collecting various demo-applications re/created by ForgeTech
 
-## Collection of things to investigate
-
-* GIT: https://github.com/isomorphic-git/isomorphic-git
-* WEBAUTH: https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API
-* ANGULAR/ANALYTICS: https://github.com/angulartics/angulartics2
-* JAVASCRIPT SEO: https://prerender.io/pricing
-* COMPANY/SIDEHUSTLE: http://justinmares.com/the-4-kinds-of-side-businesses-you-can-start/
-* COMPANY: https://www.palantir.com/getting-hired/
 * PROJECT SETUP:
- * [x] ~~Create chrome-extension Setup~~
- * [x] Create frontend Web-Client Setup
- * [x] Create ionic(v2) Setup
- * [x] ~~Get in-browser TypeOrm working~~
-   * [x] ~~with angular 2 app~~
- * [ ] Create Client-Server Setup
+* [ ] Create Client-Server Setup
    * [ ] Add Angular Universal Libs ( Server-Side Rendering )
  * [ ] Create Api-Server Setup
  * [ ] Elastic Search Setup
@@ -39,6 +26,15 @@ Repository for collecting various demo-applications re/created by ForgeTech
     * https://css-tricks.com/automating-css-regression-testing/
   
 ### Research
+* [ ] WEBWORKER: http://www.eslinstructor.net/vkthread/
+* [ ] WEBWORKER: https://hacks.mozilla.org/2015/07/how-fast-are-web-workers/
+* [ ] WEBWORKER: https://github.com/gmarty/web-workers-benchmark
+* [ ] GIT: https://github.com/isomorphic-git/isomorphic-git
+* [ ] WEBAUTH: https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API
+* [ ] ANGULAR/ANALYTICS: https://github.com/angulartics/angulartics2
+* [ ] JAVASCRIPT SEO: https://prerender.io/pricing
+* [ ] COMPANY/SIDEHUSTLE: http://justinmares.com/the-4-kinds-of-side-businesses-you-can-start/
+* [ ] COMPANY: https://www.palantir.com/getting-hired/
 * [ ] PROTOTYPING/UX: https://overflow.io/
 * [ ] GRAPHQL; https://www.prisma.io/?q=a
 * [ ] CAPTCHA: https://webdesign.tutsplus.com/tutorials/how-to-integrate-no-captcha-recaptcha-in-your-website--cms-23024
