@@ -26,6 +26,7 @@ Repository for collecting various demo-applications re/created by ForgeTech
     * https://css-tricks.com/automating-css-regression-testing/
   
 ### Research
+* [ ] ANGULAR: https://www.npmjs.com/package/generator-ngx-rocket
 * [ ] WEBWORKER: https://aarontgrogg.com/blog/2015/07/20/the-difference-between-service-workers-web-workers-and-websockets/
 * [ ] WEBWORKER: http://www.eslinstructor.net/vkthread/
 * [ ] WEBWORKER: https://hacks.mozilla.org/2015/07/how-fast-are-web-workers/
